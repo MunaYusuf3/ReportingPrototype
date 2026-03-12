@@ -1,0 +1,46 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+venv/
+env/
+.venv/
+
+# Django
+*.log
+db.sqlite3
+media/
+staticfiles/
+
+# Django migrations (optional)
+# */migrations/*.py
+# */migrations/*.pyc
+
+# Environment variables
+.env
+
+# Mac system files
+.DS_Store
+
+# VS Code
+.vscode/
+
+# Node / React
+node_modules/
+dist/
+build/
+
+# npm logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Python packaging
+*.egg-info/
+.eggs/
+
+# Coverage / testing
+.coverage
+htmlcov/
