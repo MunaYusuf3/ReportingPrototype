@@ -14,6 +14,8 @@ function OptionsPage() {
     );
   }
 
+  const platform = post.reported_account?.platform;
+
   const goToReportReasons = () => {
     navigate("/report/reason", {
       state: { post },
@@ -25,26 +27,32 @@ function OptionsPage() {
       <h2>What would you like to do?</h2>
 
       <div className="content-card">
-        <p><strong>Platform:</strong> {post.reported_account?.platform}</p>
+        <p><strong>Platform:</strong> {platform}</p>
         <p><strong>User:</strong> {post.reported_account?.username}</p>
         <p><strong>Content:</strong> {post.text}</p>
       </div>
 
       <div className="reason-buttons">
-        <button>Block this contact</button>
+        {platform === "whatsapp" && (
+          <>
+            <button>Block this contact</button>
+            <button onClick={goToReportReasons}>Block and report</button>
+            <button>Leave this chat</button>
+            <button>Mute notifications</button>
+            <button onClick={goToReportReasons}>Report this message</button>
+            <button>Flag behaviour for review</button>
+          </>
+        )}
 
-        <button onClick={goToReportReasons}>
-          Block and report
-        </button>
-
-        <button>Leave this chat</button>
-        <button>Mute notifications</button>
-
-        <button onClick={goToReportReasons}>
-          Report this message
-        </button>
-
-        <button>Flag behaviour for review</button>
+        {platform === "instagram" && (
+          <>
+            <button>Block this account</button>
+            <button onClick={goToReportReasons}>Report this post</button>
+            <button>Mute this account</button>
+            <button>Hide similar content</button>
+            <button>Flag behaviour for review</button>
+          </>
+        )}
       </div>
 
       <button className="cancel-button" onClick={() => navigate("/")}>
