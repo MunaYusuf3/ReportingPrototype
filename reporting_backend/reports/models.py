@@ -2,16 +2,16 @@ from django.db import models
 
 # Create your models here.
 
+# store reported accounts
 class ReportedAccount(models.Model):
     PLATFORM_CHOICES = [
         ("instagram", "Instagram"),
         ("whatsapp", "WhatsApp")
     ]
-
     STATUS_CHOICES = [
-        ("active", "Active"),
-        ("under_review", "Under Review"),
-        ("actioned", "Actioned")
+        ("active", "Active"), # no action taken yet
+        ("under_review", "Under Review"), # moderators are checking
+        ("actioned", "Actioned") # moderator action taken
     ]
 
     username = models.CharField(max_length=100)
@@ -24,6 +24,7 @@ class ReportedAccount(models.Model):
     def __str__(self):
         return self.username
 
+# store harmful content types
 class ContentItem(models.Model):
     CONTENT_TYPE_CHOICES = [
         ("message", "Message"),
@@ -43,15 +44,16 @@ class ContentItem(models.Model):
     def __str__(self):
         return f"{self.content_type} - {self.content_id}"
 
-
+# store report submission choices
 class Report(models.Model):
-    CATEGORY_CHOICES = [
-        ("harassment", "Harassment or Abuse"),
-        ("hate_speech", "Hate Speech"),
-        ("misinformation", "Misinformation"),
-        ("spam_scam", "Spam or Scam"),
+    CATEGORY_CHOICES = [ #from figma prototype
+        ("harassment_or_bullying", "Harassment or Bullying"), 
+        ("hate_or_discrimination", "Hate or Discrimination"),
+        ("threats_or_intimidation", "Threats or Intimidation"),
+        ("misinformation", "False or misleading information"),
+        ("scams_or_impersonation", "Scams or impersonation"),
         ("sexual_content", "Non-consensual or Sexual Content"),
-        ("other", "Other"),
+        ("something_else", "Something_else"),
     ]
 
     STATUS_CHOICES = [
@@ -62,11 +64,7 @@ class Report(models.Model):
     ]
 
     reporter_id = models.CharField(max_length=100, blank=True, null= True)
-    content_item = models.ForeignKey(
-        ContentItem,
-        on_delete=models.CASCADE,
-        related_name="reports"
-    )
+    content_item = models.ForeignKey(ContentItem,on_delete=models.CASCADE,related_name="reports")
     category = models.CharField(max_length=50, choices=CATEGORY_CHOICES)
     description = models.TextField(blank=True)
     status = models.CharField(max_length=30, choices=STATUS_CHOICES, default="submitted")
