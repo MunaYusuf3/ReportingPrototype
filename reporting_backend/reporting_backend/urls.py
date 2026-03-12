@@ -16,7 +16,11 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from reports.views import ContentItemListView,ReportListView,SubmitReportView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path("api/content/", ContentItemListView.as_view(), name="content_list"),
+    path("api/reports/", ReportListView.as_view(), name="report_list"),
+    path("api/reports/submit/", SubmitReportView.as_view(), name="submit_report"),
 ]

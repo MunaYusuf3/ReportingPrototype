@@ -14,9 +14,12 @@ class ReportedAccount(models.Model):
         ("actioned", "Actioned")
     ]
 
-    username = models.CharField(max_length=100, unique=True)
+    username = models.CharField(max_length=100)
     platform = models.CharField(max_length=50, choices= PLATFORM_CHOICES)
     status = models.CharField(max_length=30,choices=STATUS_CHOICES,default="active")
+
+    class Meta:
+        unique_together = ("platform", "username")
 
     def __str__(self):
         return self.username
@@ -58,7 +61,7 @@ class Report(models.Model):
         ("rejected", "Rejected"),
     ]
 
-    reporter_id = models.CharField(max_length=100, blank=True)
+    reporter_id = models.CharField(max_length=100, blank=True, null= True)
     content_item = models.ForeignKey(
         ContentItem,
         on_delete=models.CASCADE,
