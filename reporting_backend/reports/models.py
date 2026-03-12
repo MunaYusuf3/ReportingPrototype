@@ -53,7 +53,7 @@ class Report(models.Model):
         ("misinformation", "False or misleading information"),
         ("scams_or_impersonation", "Scams or impersonation"),
         ("sexual_content", "Non-consensual or Sexual Content"),
-        ("something_else", "Something_else"),
+        ("something_else", "Other"),
     ]
 
     STATUS_CHOICES = [
