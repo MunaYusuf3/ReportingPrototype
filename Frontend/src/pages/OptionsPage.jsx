@@ -22,6 +22,12 @@ function OptionsPage() {
     });
   };
 
+  const goToSoftReport = () => {
+    navigate("/report/softreport", {
+      state: { post },
+    });
+  };
+
   return (
     <div className="app">
       <h2>What would you like to do?</h2>
@@ -40,7 +46,7 @@ function OptionsPage() {
             <button>Leave this chat</button>
             <button>Mute notifications</button>
             <button onClick={goToReportReasons}>Report this message</button>
-            <button>Flag behaviour for review</button>
+            <button onClick={goToSoftReport}>Flag behaviour for review</button>
           </>
         )}
 
@@ -50,7 +56,8 @@ function OptionsPage() {
             <button onClick={goToReportReasons}>Report this post</button>
             <button>Mute this account</button>
             <button>Hide similar content</button>
-            <button>Flag behaviour for review</button>
+            <button onClick={goToSoftReport}>Flag behaviour for review</button>
+            
           </>
         )}
       </div>

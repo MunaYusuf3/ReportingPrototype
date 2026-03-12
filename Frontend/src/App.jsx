@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import FeedPage from "./pages/FeedPage";
 import ReasonPage from "./pages/ReasonPage";
 import OptionsPage from "./pages/OptionsPage";
+import SoftReportPage from "./pages/SoftReportPage";
 
 import "./App.css";
 
@@ -12,6 +13,7 @@ function App() {
         <Route path="/" element={<FeedPage />} />
         <Route path="/report/options" element={<OptionsPage />} />
         <Route path="/report/reason" element={<ReasonPage />} />
+        <Route path="/report/softreport" element={<SoftReportPage />} />
       </Routes>
     </Router>
   );
