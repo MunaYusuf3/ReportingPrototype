@@ -59,7 +59,10 @@ function ReasonPage() {
         </button>
       </div>
 
-      <button className="cancel-button" onClick={() => navigate("/")}>
+      <button
+        className="cancel-button"
+        onClick={() => navigate("/report/options", { state: { post } })}
+      >
         Go back
       </button>
     </div>

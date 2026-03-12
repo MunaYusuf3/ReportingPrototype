@@ -30,7 +30,7 @@ function FeedPage() {
   };
 
   const handleReportClick = (post) => {
-    navigate("/report/reason", { state: { post } });
+    navigate("/report/options", { state: { post } });
   };
 
   return (
@@ -50,7 +50,7 @@ function FeedPage() {
             <p><strong>Message:</strong> {post.text}</p>
 
             <button onClick={() => handleReportClick(post)}>
-              Report this
+              Options
             </button>
           </div>
         ))}
