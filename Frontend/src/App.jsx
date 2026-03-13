@@ -6,6 +6,7 @@ import SoftReportPage from "./pages/SoftReportPage";
 import MoreInformationPage from "./pages/MoreInformationPage";
 import NextStepsPage from "./pages/NextStepsPage";
 import ReportConfirmationPage from "./pages/ReportConfirmationPage";
+import SuccessPage from "./pages/SuccessPage";
 
 import "./App.css";
 
@@ -21,6 +22,7 @@ function App() {
         <Route path="/report/moreinfo" element={<MoreInformationPage />} />
         <Route path="/report/nextsteps" element={<NextStepsPage />} />
         <Route path="/report/confirmation" element={<ReportConfirmationPage />} />
+        <Route path="/report/success" element={<SuccessPage />} />
       </Routes>
     </Router>
   );

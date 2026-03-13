@@ -86,5 +86,5 @@ class ContentItemListView(ListAPIView):
 class ReportListView(ListAPIView):
     def get(self,request):
         reports = Report.objects.all().order_by("-created_at")
-        serializer = ReportSerializer(items, many = True)
+        serializer = ReportSerializer(reports, many = True)
         return Response(serializer.data)

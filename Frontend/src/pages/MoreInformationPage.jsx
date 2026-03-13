@@ -23,14 +23,15 @@ function MoreInformationPage() {
 
   const formatReason = (value) => {
     const labels = {
-      harassment: "Harassment or bullying",
-      hate_speech: "Hate or discrimination",
+      harassment_or_bullying: "Harassment or bullying",
+      hate_or_discrimination: "Hate or discrimination",
+      threats_or_intimidation: "Threats or intimidation",
       misinformation: "False or misleading information",
-      spam_scam: "Spam or impersonation",
-      sexual_content: "Non-consensual or sexual content",
-      other: "Other",
+      scams_or_impersonation: "Scams or impersonation",
+      sexual_content: "Sexual abuse or exploitation",
+      something_else: "Other",
     };
-
+  
     return labels[value] || value;
   };
 
