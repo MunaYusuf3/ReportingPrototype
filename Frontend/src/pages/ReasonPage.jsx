@@ -15,7 +15,7 @@ function ReasonPage() {
   }
 
   const handleReasonClick = (reason) => {
-    navigate("/report/details", {
+    navigate("/report/moreinfo", {
       state: {
         post,
         reason,
