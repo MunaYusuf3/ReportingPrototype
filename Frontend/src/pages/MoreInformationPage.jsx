@@ -14,9 +14,19 @@ function MoreInformationPage() {
 
   if (!post || !reason) {
     return (
-      <div className="app">
-        <h2>Missing report details</h2>
-        <button onClick={() => navigate("/")}>Go back</button>
+      <div className="page">
+        <div className="card">
+          <h1 className="page-title">Missing report details</h1>
+          <p className="page-subtitle">
+            Go back and choose the content and report category first.
+          </p>
+
+          <div className="button-row">
+            <button className="button-secondary" onClick={() => navigate("/")}>
+              Go back
+            </button>
+          </div>
+        </div>
       </div>
     );
   }
@@ -31,11 +41,11 @@ function MoreInformationPage() {
       sexual_content: "Sexual abuse or exploitation",
       something_else: "Other",
     };
-  
+
     return labels[value] || value;
   };
 
-  const handleSubmit = () => {
+  const handleContinue = () => {
     navigate("/report/nextsteps", {
       state: {
         post,
@@ -60,76 +70,115 @@ function MoreInformationPage() {
   };
 
   return (
-    <div className="app">
-      <h1>Tell us a little more</h1>
-      <p className="subtitle">Step 2 of 4: Additional details</p>
+    <div className="page">
+      <div className="card">
+        <h1 className="page-title">Tell us a little more</h1>
+        <p className="page-subtitle">
+          This extra context can help make the report easier to review.
+        </p>
 
-      <div className="details-card">
-        <div className="selected-category">
-          <p><strong>Category selected:</strong> {formatReason(reason)}</p>
+        <div className="summary-box">
+          <div className="summary-item">
+            <strong>Platform:</strong> {post.reported_account?.platform}
+          </div>
+          <div className="summary-item">
+            <strong>User:</strong> {post.reported_account?.username}
+          </div>
+          <div className="summary-item">
+            <strong>Category selected:</strong> {formatReason(reason)}
+          </div>
+          <div className="summary-item">
+            <strong>Content:</strong> {post.text}
+          </div>
         </div>
 
-        <div className="section-box">
-          <p>Who is affected?</p>
-        </div>
-
-        <div className="option-group">
+        <h2 className="section-title">Who is affected?</h2>
+        <div className="option-list">
           <button
-            className={affected === "me" ? "selected" : ""}
+            type="button"
+            className={`option-card ${affected === "me" ? "selected" : ""}`}
             onClick={() => setAffected("me")}
           >
-            This targets me
+            <div className="option-title">This targets me</div>
+            <div className="option-description">
+              The content is directed at me or affects me personally.
+            </div>
           </button>
 
           <button
-            className={affected === "someone_else" ? "selected" : ""}
+            type="button"
+            className={`option-card ${
+              affected === "someone_else" ? "selected" : ""
+            }`}
             onClick={() => setAffected("someone_else")}
           >
-            This targets someone else
+            <div className="option-title">This targets someone else</div>
+            <div className="option-description">
+              The content affects another person or group.
+            </div>
           </button>
 
           <button
-            className={affected === "prefer_not_to_say" ? "selected" : ""}
+            type="button"
+            className={`option-card ${
+              affected === "prefer_not_to_say" ? "selected" : ""
+            }`}
             onClick={() => setAffected("prefer_not_to_say")}
           >
-            Prefer not to say
+            <div className="option-title">Prefer not to say</div>
+            <div className="option-description">
+              Continue without sharing who is affected.
+            </div>
           </button>
         </div>
 
-        <div className="section-box">
-          <p>Behaviour pattern</p>
-        </div>
-
-        <div className="option-group">
+        <h2 className="section-title">Behaviour pattern</h2>
+        <div className="option-list">
           <button
-            className={pattern === "once" ? "selected" : ""}
+            type="button"
+            className={`option-card ${pattern === "once" ? "selected" : ""}`}
             onClick={() => setPattern("once")}
           >
-            This happened once
+            <div className="option-title">This happened once</div>
+            <div className="option-description">
+              This appears to be a one-off incident.
+            </div>
           </button>
 
           <button
-            className={pattern === "repeated" ? "selected" : ""}
+            type="button"
+            className={`option-card ${
+              pattern === "repeated" ? "selected" : ""
+            }`}
             onClick={() => setPattern("repeated")}
           >
-            This is a repeated behaviour
+            <div className="option-title">This is repeated behaviour</div>
+            <div className="option-description">
+              Similar behaviour has happened before or keeps happening.
+            </div>
           </button>
         </div>
 
-        <div className="section-box">
-          <p>Additional context</p>
-        </div>
-
+        <h2 className="section-title">Additional context</h2>
+        <label htmlFor="extraDetails">Anything else you want us to know?</label>
         <textarea
-          className="details-textarea"
-          placeholder="Add more details (optional)"
+          id="extraDetails"
+          placeholder="Add more details if you want to. This is optional."
           value={extraDetails}
           onChange={(e) => setExtraDetails(e.target.value)}
         />
 
-        <div className="details-actions">
-          <button onClick={handleSubmit}>Submit</button>
-          <button onClick={handleSkip}>Skip</button>
+        <p className="helper-text">
+          You can continue without answering every question.
+        </p>
+
+        <div className="button-row">
+          <button className="button-secondary" onClick={handleSkip}>
+            Skip
+          </button>
+          <button className="button-primary" onClick={handleContinue}>
+            Continue
+          </button>
         </div>
       </div>
     </div>

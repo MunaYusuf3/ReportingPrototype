@@ -16,12 +16,57 @@ function ConfirmationPage() {
 
   if (!post || !reason) {
     return (
-      <div className="app">
-        <h2>Missing report information</h2>
-        <button onClick={() => navigate("/")}>Go back</button>
+      <div className="page">
+        <div className="card">
+          <h1 className="page-title">Missing report information</h1>
+          <p className="page-subtitle">
+            Go back and complete the report details first.
+          </p>
+
+          <div className="button-row">
+            <button className="button-secondary" onClick={() => navigate("/")}>
+              Go back
+            </button>
+          </div>
+        </div>
       </div>
     );
   }
+
+  const formatReason = (value) => {
+    const labels = {
+      harassment_or_bullying: "Harassment or bullying",
+      hate_or_discrimination: "Hate or discrimination",
+      threats_or_intimidation: "Threats or intimidation",
+      misinformation: "False or misleading information",
+      scams_or_impersonation: "Scams or impersonation",
+      sexual_content: "Sexual abuse or exploitation",
+      something_else: "Other",
+    };
+
+    return labels[value] || value;
+  };
+
+  const formatAffected = (value) => {
+    const labels = {
+      me: "This targets me",
+      someone_else: "This targets someone else",
+      prefer_not_to_say: "Prefer not to say",
+      "": "Not provided",
+    };
+
+    return labels[value] || value;
+  };
+
+  const formatPattern = (value) => {
+    const labels = {
+      once: "This happened once",
+      repeated: "This is repeated behaviour",
+      "": "Not provided",
+    };
+
+    return labels[value] || value;
+  };
 
   const fullDescription = `
 Affected: ${affected || "Not provided"}
@@ -77,21 +122,80 @@ Extra details: ${extraDetails || "None"}
   };
 
   return (
-    <div className="app">
-      <h2>Confirm your report</h2>
+    <div className="page">
+      <div className="card">
+        <h1 className="page-title">Confirm your report</h1>
+        <p className="page-subtitle">
+          Review the information below before sending your report.
+        </p>
 
-      <div className="content-card">
-        <p><strong>Platform:</strong> {post.reported_account?.platform}</p>
-        <p><strong>User:</strong> {post.reported_account?.username}</p>
-        <p><strong>Content:</strong> {post.text}</p>
-        <p><strong>Category:</strong> {reason}</p>
+        <div className="summary-box">
+          <div className="summary-item">
+            <strong>Platform:</strong> {post.reported_account?.platform}
+          </div>
+          <div className="summary-item">
+            <strong>User:</strong> {post.reported_account?.username}
+          </div>
+          <div className="summary-item">
+            <strong>Content type:</strong> {post.content_type}
+          </div>
+          <div className="summary-item">
+            <strong>Content:</strong> {post.text}
+          </div>
+        </div>
+
+        <h2 className="section-title">Report summary</h2>
+
+        <div className="summary-box">
+          <div className="summary-item">
+            <strong>Category:</strong> {formatReason(reason)}
+          </div>
+          <div className="summary-item">
+            <strong>Who is affected:</strong> {formatAffected(affected)}
+          </div>
+          <div className="summary-item">
+            <strong>Behaviour pattern:</strong> {formatPattern(pattern)}
+          </div>
+          <div className="summary-item">
+            <strong>Additional details:</strong>{" "}
+            {extraDetails?.trim() ? extraDetails : "None provided"}
+          </div>
+        </div>
+
+        <p className="helper-text">
+          Once submitted, your report will be sent to the moderation system for review.
+        </p>
+
+        {error && <div className="error-message">{error}</div>}
+
+        <div className="button-row">
+          <button
+            className="button-secondary"
+            onClick={() =>
+              navigate("/report/nextsteps", {
+                state: {
+                  post,
+                  reason,
+                  affected,
+                  pattern,
+                  extraDetails,
+                },
+              })
+            }
+            disabled={isSubmitting}
+          >
+            Go back
+          </button>
+
+          <button
+            className="button-primary"
+            onClick={handleConfirm}
+            disabled={isSubmitting}
+          >
+            {isSubmitting ? "Submitting..." : "Confirm report"}
+          </button>
+        </div>
       </div>
-
-      {error && <p>{error}</p>}
-
-      <button onClick={handleConfirm} disabled={isSubmitting}>
-        {isSubmitting ? "Submitting..." : "Confirm report"}
-      </button>
     </div>
   );
 }
