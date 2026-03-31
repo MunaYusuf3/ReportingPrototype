@@ -1,7 +1,8 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { formatReason, formatAffected, formatPattern, API_BASE } from "../utils";
 
-function ConfirmationPage() {
+function ReportConfirmationPage() {
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -22,7 +23,6 @@ function ConfirmationPage() {
           <p className="page-subtitle">
             Go back and complete the report details first.
           </p>
-
           <div className="button-row">
             <button className="button-secondary" onClick={() => navigate("/")}>
               Go back
@@ -32,47 +32,12 @@ function ConfirmationPage() {
       </div>
     );
   }
-
-  const formatReason = (value) => {
-    const labels = {
-      harassment_or_bullying: "Harassment or bullying",
-      hate_or_discrimination: "Hate or discrimination",
-      threats_or_intimidation: "Threats or intimidation",
-      misinformation: "False or misleading information",
-      scams_or_impersonation: "Scams or impersonation",
-      sexual_content: "Sexual abuse or exploitation",
-      something_else: "Other",
-    };
-
-    return labels[value] || value;
-  };
-
-  const formatAffected = (value) => {
-    const labels = {
-      me: "This targets me",
-      someone_else: "This targets someone else",
-      prefer_not_to_say: "Prefer not to say",
-      "": "Not provided",
-    };
-
-    return labels[value] || value;
-  };
-
-  const formatPattern = (value) => {
-    const labels = {
-      once: "This happened once",
-      repeated: "This is repeated behaviour",
-      "": "Not provided",
-    };
-
-    return labels[value] || value;
-  };
-
-  const fullDescription = `
-Affected: ${affected || "Not provided"}
-Pattern: ${pattern || "Not provided"}
-Extra details: ${extraDetails || "None"}
-  `.trim();
+  const buildDescription = () =>
+    [
+      `Affected: ${affected || "Not provided"}`,
+      `Pattern: ${pattern || "Not provided"}`,
+      `Extra details: ${extraDetails?.trim() || "None"}`,
+    ].join("\n");
 
   const handleConfirm = async () => {
     setIsSubmitting(true);
@@ -85,37 +50,24 @@ Extra details: ${extraDetails || "None"}
       content_type: post.content_type,
       text: post.text,
       category: reason,
-      description: fullDescription,
-      reporter_id: "",
+      description: buildDescription(),
+      reporter_id: "", 
     };
 
-    console.log("Submitting payload:", payload);
-
     try {
-      const response = await fetch("http://127.0.0.1:8000/api/reports/submit/", {
+      const response = await fetch(`${API_BASE}/api/reports/submit/`, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
       });
 
       const data = await response.json();
-      console.log("Server response:", data);
+      if (!response.ok) throw new Error(data.error || "Failed to submit report");
 
-      if (!response.ok) {
-        throw new Error(data.error || "Failed to submit report");
-      }
-
-      navigate("/report/success", {
-        state: {
-          post,
-          reason,
-        },
-      });
+      navigate("/report/success", { state: { post, reason } });
     } catch (err) {
       console.error("Submit error:", err);
-      setError(err.message || "Something went wrong while submitting the report.");
+      setError(err.message || "Something went wrong. Please try again.");
     } finally {
       setIsSubmitting(false);
     }
@@ -126,9 +78,10 @@ Extra details: ${extraDetails || "None"}
       <div className="card">
         <h1 className="page-title">Confirm your report</h1>
         <p className="page-subtitle">
-          Review the information below before sending your report.
+          Review the details below before sending. You can go back to make
+          changes.
         </p>
-
+        <h2 className="section-title">Content</h2>
         <div className="summary-box">
           <div className="summary-item">
             <strong>Platform:</strong> {post.reported_account?.platform}
@@ -143,9 +96,7 @@ Extra details: ${extraDetails || "None"}
             <strong>Content:</strong> {post.text}
           </div>
         </div>
-
-        <h2 className="section-title">Report summary</h2>
-
+        <h2 className="section-title">Your report</h2>
         <div className="summary-box">
           <div className="summary-item">
             <strong>Category:</strong> {formatReason(reason)}
@@ -163,7 +114,8 @@ Extra details: ${extraDetails || "None"}
         </div>
 
         <p className="helper-text">
-          Once submitted, your report will be sent to the moderation system for review.
+          Your report is anonymous. The person you are reporting will not be
+          told who submitted this report.
         </p>
 
         {error && <div className="error-message">{error}</div>}
@@ -171,26 +123,19 @@ Extra details: ${extraDetails || "None"}
         <div className="button-row">
           <button
             className="button-secondary"
+            disabled={isSubmitting}
             onClick={() =>
               navigate("/report/nextsteps", {
-                state: {
-                  post,
-                  reason,
-                  affected,
-                  pattern,
-                  extraDetails,
-                },
+                state: { post, reason, affected, pattern, extraDetails },
               })
             }
-            disabled={isSubmitting}
           >
             Go back
           </button>
-
           <button
             className="button-primary"
-            onClick={handleConfirm}
             disabled={isSubmitting}
+            onClick={handleConfirm}
           >
             {isSubmitting ? "Submitting..." : "Confirm report"}
           </button>
@@ -200,4 +145,4 @@ Extra details: ${extraDetails || "None"}
   );
 }
 
-export default ConfirmationPage;
+export default ReportConfirmationPage;

@@ -1,7 +1,6 @@
-// //add to back end that when it goes to this page , an extra report is added to the perpetrators account
-
 import { useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { API_BASE } from "../utils";
 
 function SoftReportPage() {
   const location = useLocation();
@@ -20,7 +19,6 @@ function SoftReportPage() {
           <p className="page-subtitle">
             Go back and choose content before continuing.
           </p>
-
           <div className="button-row">
             <button className="button-secondary" onClick={() => navigate("/")}>
               Go back
@@ -44,29 +42,25 @@ function SoftReportPage() {
       category: "soft_report",
       description: notes?.trim()
         ? `Soft report notes: ${notes}`
-        : "User flagged this behaviour for review without selecting a formal report category.",
+        : "User flagged this behaviour for review without selecting a formal category.",
       reporter_id: "",
     };
 
     try {
-      const response = await fetch("http://127.0.0.1:8000/api/reports/submit/", {
+      const response = await fetch(`${API_BASE}/api/reports/submit/`, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
       });
 
       const data = await response.json();
+      if (!response.ok) throw new Error(data.error || "Failed to submit");
 
-      if (!response.ok) {
-        throw new Error(data.error || "Failed to submit soft report");
-      }
 
       navigate("/report/success");
     } catch (err) {
       console.error("Soft report error:", err);
-      setError(err.message || "Something went wrong while submitting.");
+      setError(err.message || "Something went wrong. Please try again.");
     } finally {
       setIsSubmitting(false);
     }
@@ -77,8 +71,9 @@ function SoftReportPage() {
       <div className="card">
         <h1 className="page-title">Flag behaviour for review</h1>
         <p className="page-subtitle">
-          Use this option if something feels concerning but you are not sure it
-          clearly fits a report category.
+          Use this if something feels concerning but you are not sure it clearly
+          fits a report category. You do not need to be certain a rule has been
+          broken.
         </p>
 
         <div className="summary-box">
@@ -89,9 +84,6 @@ function SoftReportPage() {
             <strong>User:</strong> {post.reported_account?.username}
           </div>
           <div className="summary-item">
-            <strong>Content type:</strong> {post.content_type}
-          </div>
-          <div className="summary-item">
             <strong>Content:</strong> {post.text}
           </div>
         </div>
@@ -100,35 +92,35 @@ function SoftReportPage() {
 
         <div className="option-list">
           <div className="option-card">
-            <div className="option-title">Flags the behaviour</div>
+            <div className="option-title">Flags the behaviour quietly</div>
             <div className="option-description">
-              This raises a concern for review without requiring a full formal
-              report category.
+              The person you are reporting will not be notified. Multiple flags
+              from different users help moderators spot patterns.
             </div>
           </div>
 
           <div className="option-card">
-            <div className="option-title">Helps identify repeated patterns</div>
+            <div className="option-title">No formal category needed</div>
             <div className="option-description">
-              Soft reports can help highlight behaviour that may become more
-              serious over time.
+              You do not need to choose a specific category or be certain
+              something was wrong to raise a concern.
             </div>
           </div>
 
           <div className="option-card">
-            <div className="option-title">Lets you act even if unsure</div>
+            <div className="option-title">Helps over time</div>
             <div className="option-description">
-              You do not need to be certain that a rule has been broken to raise
-              a concern.
+              Soft reports can help identify behaviour that becomes more serious
+              across multiple interactions.
             </div>
           </div>
         </div>
 
         <h2 className="section-title">Optional note</h2>
-        <label htmlFor="softReportNote">Why are you concerned?</label>
+        <label htmlFor="softReportNote">Why are you concerned? (optional)</label>
         <textarea
           id="softReportNote"
-          placeholder="Add a short note if you want to explain why this feels concerning."
+          placeholder="Briefly describe what felt concerning. You can leave this blank."
           value={notes}
           onChange={(e) => setNotes(e.target.value)}
         />
@@ -143,13 +135,12 @@ function SoftReportPage() {
           >
             Go back
           </button>
-
           <button
             className="button-primary"
             onClick={handleSoftReport}
             disabled={isSubmitting}
           >
-            {isSubmitting ? "Submitting..." : "Submit soft report"}
+            {isSubmitting ? "Submitting..." : "Submit flag"}
           </button>
         </div>
       </div>

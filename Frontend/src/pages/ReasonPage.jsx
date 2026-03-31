@@ -1,5 +1,72 @@
 import { useLocation, useNavigate } from "react-router-dom";
 
+const INSTAGRAM_CATEGORIES = [
+  {
+    value: "harassment_or_bullying",
+    title: "Harassment or bullying",
+    description: "Insults, repeated harassment, or content targeting someone personally.",
+  },
+  {
+    value: "hate_or_discrimination",
+    title: "Hate or discrimination",
+    description: "Content attacking someone because of their identity.",
+  },
+  {
+    value: "threats_or_intimidation",
+    title: "Threats or intimidation",
+    description: "Statements suggesting violence or serious harm.",
+  },
+  {
+    value: "sexual_content",
+    title: "Sexual abuse or exploitation",
+    description: "Unwanted sexual behaviour, coercion, or exploitative content.",
+  },
+  {
+    value: "misinformation",
+    title: "False or misleading information",
+    description: "Content designed to deceive, mislead, or spread false claims.",
+  },
+  {
+    value: "something_else",
+    title: "Not sure which category fits?",
+    description: "Continue anyway and explain the issue in your own words.",
+  },
+];
+
+const WHATSAPP_CATEGORIES = [
+  {
+    value: "harassment_or_bullying",
+    title: "Harassment or bullying",
+    description: "Insults, repeated harassment, or content targeting someone personally.",
+  },
+  {
+    value: "hate_or_discrimination",
+    title: "Hate or discrimination",
+    description: "Content attacking someone because of their identity.",
+  },
+  {
+    value: "threats_or_intimidation",
+    title: "Threats or intimidation",
+    description: "Statements suggesting violence or serious harm.",
+  },
+  {
+    value: "sexual_content",
+    title: "Sexual abuse or exploitation",
+    description: "Unwanted sexual behaviour, coercion, or exploitative content.",
+  },
+  {
+    value: "scams_or_impersonation",
+    title: "Scams or impersonation",
+    description:
+      "Messages pretending to be someone else or trying to trick people into sharing money or personal information.",
+  },
+  {
+    value: "something_else",
+    title: "Not sure which category fits?",
+    description: "Continue anyway and explain the issue in your own words.",
+  },
+];
+
 function ReasonPage() {
   const location = useLocation();
   const navigate = useNavigate();
@@ -13,7 +80,6 @@ function ReasonPage() {
           <p className="page-subtitle">
             Go back and choose a post or message first.
           </p>
-
           <div className="button-row">
             <button className="button-secondary" onClick={() => navigate("/")}>
               Go back
@@ -25,14 +91,11 @@ function ReasonPage() {
   }
 
   const platform = post.reported_account?.platform?.toLowerCase();
+  const categories =
+    platform === "instagram" ? INSTAGRAM_CATEGORIES : WHATSAPP_CATEGORIES;
 
   const handleReasonClick = (reason) => {
-    navigate("/report/moreinfo", {
-      state: {
-        post,
-        reason,
-      },
-    });
+    navigate("/report/moreinfo", { state: { post, reason } });
   };
 
   return (
@@ -40,8 +103,8 @@ function ReasonPage() {
       <div className="card">
         <h1 className="page-title">Why are you reporting this?</h1>
         <p className="page-subtitle">
-          Choose the option that best matches what happened. You can still add
-          more detail on the next screen.
+          Choose the option that best matches what happened. You can add more
+          detail on the next screen.
         </p>
 
         <div className="summary-box">
@@ -59,160 +122,25 @@ function ReasonPage() {
         <h2 className="section-title">Report category</h2>
 
         <div className="option-list">
-          {platform === "whatsapp" && (
-            <>
-              <button
-                className="option-card"
-                type="button"
-                onClick={() => handleReasonClick("harassment_or_bullying")}
-              >
-                <div className="option-title">Harassment or bullying</div>
-                <div className="option-description">
-                  Insults, repeated harassment, or content targeting someone
-                  personally.
-                </div>
-              </button>
-
-              <button
-                className="option-card"
-                type="button"
-                onClick={() => handleReasonClick("hate_or_discrimination")}
-              >
-                <div className="option-title">Hate or discrimination</div>
-                <div className="option-description">
-                  Content attacking someone because of their identity.
-                </div>
-              </button>
-
-              <button
-                className="option-card"
-                type="button"
-                onClick={() => handleReasonClick("threats_or_intimidation")}
-              >
-                <div className="option-title">Threats or intimidation</div>
-                <div className="option-description">
-                  Statements suggesting violence or serious harm.
-                </div>
-              </button>
-
-              <button
-                className="option-card"
-                type="button"
-                onClick={() => handleReasonClick("sexual_content")}
-              >
-                <div className="option-title">
-                  Sexual abuse or exploitation
-                </div>
-                <div className="option-description">
-                  Unwanted sexual behaviour, coercion, or exploitative content.
-                </div>
-              </button>
-
-              <button
-                className="option-card"
-                type="button"
-                onClick={() => handleReasonClick("scams_or_impersonation")}
-              >
-                <div className="option-title">Scams or impersonation</div>
-                <div className="option-description">
-                  Messages pretending to be someone else or trying to trick
-                  people into sharing money or personal information.
-                </div>
-              </button>
-
-              <button
-                className="option-card"
-                type="button"
-                onClick={() => handleReasonClick("something_else")}
-              >
-                <div className="option-title">Not sure which category fits?</div>
-                <div className="option-description">
-                  Continue anyway and explain the issue in your own words.
-                </div>
-              </button>
-            </>
-          )}
-
-          {platform === "instagram" && (
-            <>
-              <button
-                className="option-card"
-                type="button"
-                onClick={() => handleReasonClick("harassment_or_bullying")}
-              >
-                <div className="option-title">Harassment or bullying</div>
-                <div className="option-description">
-                  Insults, repeated harassment, or content targeting someone
-                  personally.
-                </div>
-              </button>
-
-              <button
-                className="option-card"
-                type="button"
-                onClick={() => handleReasonClick("hate_or_discrimination")}
-              >
-                <div className="option-title">Hate or discrimination</div>
-                <div className="option-description">
-                  Content attacking someone because of their identity.
-                </div>
-              </button>
-
-              <button
-                className="option-card"
-                type="button"
-                onClick={() => handleReasonClick("threats_or_intimidation")}
-              >
-                <div className="option-title">Threats or intimidation</div>
-                <div className="option-description">
-                  Statements suggesting violence or serious harm.
-                </div>
-              </button>
-
-              <button
-                className="option-card"
-                type="button"
-                onClick={() => handleReasonClick("sexual_content")}
-              >
-                <div className="option-title">
-                  Sexual abuse or exploitation
-                </div>
-                <div className="option-description">
-                  Unwanted sexual behaviour, coercion, or exploitative content.
-                </div>
-              </button>
-
-              <button
-                className="option-card"
-                type="button"
-                onClick={() => handleReasonClick("misinformation")}
-              >
-                <div className="option-title">
-                  False or misleading information
-                </div>
-                <div className="option-description">
-                  Content designed to deceive, mislead, or spread false claims.
-                </div>
-              </button>
-
-              <button
-                className="option-card"
-                type="button"
-                onClick={() => handleReasonClick("something_else")}
-              >
-                <div className="option-title">Not sure which category fits?</div>
-                <div className="option-description">
-                  Continue anyway and explain the issue in your own words.
-                </div>
-              </button>
-            </>
-          )}
+          {categories.map((cat) => (
+            <button
+              key={cat.value}
+              className="option-card"
+              type="button"
+              onClick={() => handleReasonClick(cat.value)}
+            >
+              <div className="option-title">{cat.title}</div>
+              <div className="option-description">{cat.description}</div>
+            </button>
+          ))}
         </div>
 
         <div className="button-row">
           <button
             className="button-secondary"
-            onClick={() => navigate("/report/options", { state: { post } })}
+            onClick={() =>
+              navigate("/report/options", { state: { post } })
+            }
           >
             Go back
           </button>

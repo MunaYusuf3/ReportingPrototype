@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { API_BASE } from "../utils";
 
 function FeedPage() {
   const [posts, setPosts] = useState([]);
@@ -9,43 +10,24 @@ function FeedPage() {
 
   const navigate = useNavigate();
 
+  // fetch content
   useEffect(() => {
+    const loadContent = async () => {
+      try {
+        const response = await fetch(`${API_BASE}/api/content/`);
+        if (!response.ok) throw new Error("Could not load content");
+        const data = await response.json();
+        setPosts(data);
+      } catch (err) {
+        console.error("Fetch error:", err);
+        setLoadError("Something went wrong while loading content.");
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
     loadContent();
   }, []);
-
-  const loadContent = async () => {
-    try {
-      const response = await fetch("http://127.0.0.1:8000/api/content/");
-
-      if (!response.ok) {
-        throw new Error("Could not get content");
-      }
-
-      const data = await response.json();
-      setPosts(data);
-    } catch (err) {
-      console.error("Fetch error:", err);
-      setLoadError("Something went wrong while loading content.");
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const handleReportClick = (post) => {
-    navigate("/report/options", { state: { post } });
-  };
-
-  const goNext = () => {
-    if (currentIndex < posts.length - 1) {
-      setCurrentIndex(currentIndex + 1);
-    }
-  };
-
-  const goPrev = () => {
-    if (currentIndex > 0) {
-      setCurrentIndex(currentIndex - 1);
-    }
-  };
 
   const currentPost = posts[currentIndex];
 
@@ -61,11 +43,16 @@ function FeedPage() {
 
         {loadError && <div className="error-message">{loadError}</div>}
 
+        {!isLoading && !loadError && posts.length === 0 && (
+          <p className="helper-text">No content available right now.</p>
+        )}
+
         {!isLoading && currentPost && (
           <>
             <div className="summary-box">
               <div className="summary-item">
-                <strong>Platform:</strong> {currentPost.reported_account.platform}
+                <strong>Platform:</strong>{" "}
+                {currentPost.reported_account.platform}
               </div>
               <div className="summary-item">
                 <strong>User:</strong> {currentPost.reported_account.username}
@@ -77,11 +64,12 @@ function FeedPage() {
                 <strong>Message:</strong> {currentPost.text}
               </div>
             </div>
-
             <div className="button-row">
               <button
                 className="button-primary"
-                onClick={() => handleReportClick(currentPost)}
+                onClick={() =>
+                  navigate("/report/options", { state: { post: currentPost } })
+                }
               >
                 Report this content
               </button>
@@ -90,15 +78,14 @@ function FeedPage() {
             <div className="button-row">
               <button
                 className="button-secondary"
-                onClick={goPrev}
+                onClick={() => setCurrentIndex((i) => i - 1)}
                 disabled={currentIndex === 0}
               >
                 Previous
               </button>
-
               <button
                 className="button-secondary"
-                onClick={goNext}
+                onClick={() => setCurrentIndex((i) => i + 1)}
                 disabled={currentIndex === posts.length - 1}
               >
                 Next
@@ -109,10 +96,6 @@ function FeedPage() {
               Post {currentIndex + 1} of {posts.length}
             </p>
           </>
-        )}
-
-        {!isLoading && !loadError && posts.length === 0 && (
-          <p className="helper-text">No content available right now.</p>
         )}
       </div>
     </div>

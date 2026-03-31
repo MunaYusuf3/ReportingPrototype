@@ -8,37 +8,38 @@ function SuccessPage() {
       <div className="card">
         <h1 className="page-title">Report submitted</h1>
         <p className="page-subtitle">
-          Thank you. Your report has been received and will be reviewed.
+          Your report has been received. Thank you for helping keep the
+          community safe.
         </p>
 
         <div className="success-message">
-          Your report was sent successfully.
+          ✓ Your report was sent successfully.
         </div>
 
-        <h2 className="section-title">What happens now?</h2>
+        <h2 className="section-title">What happens now</h2>
 
         <div className="option-list">
           <div className="option-card">
             <div className="option-title">Your report will be reviewed</div>
             <div className="option-description">
-              Moderators can use the information you provided to assess the
+              Moderators will use the information you provided to assess the
               situation and decide whether action is needed.
             </div>
           </div>
 
           <div className="option-card">
-            <div className="option-title">You may not get an immediate outcome</div>
+            <div className="option-title">Reviews can take time</div>
             <div className="option-description">
               Some reports take longer to review, especially when more context
-              is needed.
+              is needed. We aim to review within 24–48 hours.
             </div>
           </div>
 
           <div className="option-card">
             <div className="option-title">You can still protect yourself</div>
             <div className="option-description">
-              You may also want to block, mute, or limit contact if the content
-              is affecting your safety or wellbeing.
+              You may also want to block, mute, or limit contact while your
+              report is being reviewed.
             </div>
           </div>
         </div>
