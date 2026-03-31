@@ -29,7 +29,7 @@ class SubmitReportView(APIView):
                 status=status.HTTP_400_BAD_REQUEST
             )
 
-        #reported account
+        #get or create the reported account
         account, created_account = ReportedAccount.objects.get_or_create(
             platform=platform,
             username=username,
@@ -38,7 +38,8 @@ class SubmitReportView(APIView):
         if created_account:
             account.status = "active"
             account.save()
-        #reported content
+
+        #get or create the content item
         content_item, created_content = ContentItem.objects.get_or_create(
             content_id=content_id,
             defaults={
@@ -49,7 +50,7 @@ class SubmitReportView(APIView):
         )
 
         
-        #create report
+        #create the report
         report = Report.objects.create(
             reporter_id=reporter_id,
             content_item=content_item,
@@ -57,7 +58,7 @@ class SubmitReportView(APIView):
             description=description,
         )
 
-        #if account is reported 3 or more times, automatically moderate that account
+        #if account is reported 3 or more times, flag it for review
         report_count = Report.objects.filter(content_item__reported_account=account).count()
 
         if report_count >= 3:
