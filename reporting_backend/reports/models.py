@@ -9,9 +9,9 @@ class ReportedAccount(models.Model):
         ("whatsapp", "WhatsApp"),
     ]
     STATUS_CHOICES = [
-        ("active", "Active"),          # no action taken yet
-        ("under_review", "Under Review"),  # moderators are reviewing
-        ("actioned", "Actioned"),      # action has been taken
+        ("active", "Active"),          
+        ("under_review", "Under Review"), 
+        ("actioned", "Actioned"),     
     ]
 
     username = models.CharField(max_length=100)
@@ -47,7 +47,7 @@ class ContentItem(models.Model):
 
 
 class Report(models.Model):
-    # report submitted through the reporting flow
+    # stores report submitted through the reporting flow
     CATEGORY_CHOICES = [
         ("harassment_or_bullying", "Harassment or Bullying"),
         ("hate_or_discrimination", "Hate or Discrimination"),
