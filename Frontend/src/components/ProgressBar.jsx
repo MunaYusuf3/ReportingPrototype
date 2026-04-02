@@ -1,5 +1,3 @@
-import React from "react";
-
 function ProgressBar({ current, total }) {
   const dots = [];
 
@@ -11,7 +9,7 @@ function ProgressBar({ current, total }) {
           width: "10px",
           height: "10px",
           borderRadius: "50%",
-          background: i < current ? "#7c3aed" : "#e5e7eb",
+          background: i < current ? "#0d9488" : "#e5e7eb",
         }}
       />
     );

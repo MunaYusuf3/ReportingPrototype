@@ -5,7 +5,7 @@
 body {
   margin: 0;
   font-family: Arial, sans-serif;
-  background: #f4f6fb;
+  background: #f0fdfa;
   color: #1f2937;
 }
 
@@ -21,7 +21,8 @@ body {
   justify-content: center;
   align-items: flex-start;
   padding: 24px;
-  background: #f4f6fb;
+  background: #f0fdfa;
+  
 }
 
 .card {
@@ -69,13 +70,13 @@ body {
 }
 
 .option-card:hover {
-  border-color: #7c3aed;
+  border-color: #0d9488;
   box-shadow: 0 4px 12px rgba(124, 58, 237, 0.12);
 }
 
 .option-card.selected {
-  border-color: #7c3aed;
-  background: #f5f3ff;
+  border-color: #0d9488;
+  background: #f0fdfa;
 }
 
 .option-title {
@@ -116,7 +117,7 @@ input:focus,
 select:focus,
 textarea:focus {
   outline: none;
-  border-color: #7c3aed;
+  border-color: #0d9488;
   box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.12);
 }
 
@@ -138,12 +139,12 @@ textarea:focus {
 }
 
 .button-primary {
-  background: #7c3aed;
+  background: #0d9488;
   color: white;
 }
 
 .button-primary:hover {
-  background: #6d28d9;
+  background: #0f766e;
 }
 
 .button-secondary {

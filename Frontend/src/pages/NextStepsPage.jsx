@@ -92,7 +92,7 @@ function NextStepsPage() {
               </div>
               <span
                 onClick={() => navigate("/report/support")}
-                style={{ fontSize: "13px", color: "#7c3aed", cursor: "pointer", textDecoration: "underline", marginTop: "6px", display: "block" }}
+                style={{ fontSize: "13px", color: "#0d9488", cursor: "pointer", textDecoration: "underline", marginTop: "6px", display: "block" }}
               >
               View support resources →
               </span>

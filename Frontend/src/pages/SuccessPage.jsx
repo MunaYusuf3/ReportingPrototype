@@ -73,7 +73,7 @@ function SuccessPage() {
         <p className="helper-text" style={{ marginTop: "12px" }}>
           <span
             onClick={() => navigate("/report/support")}
-            style={{ color: "#7c3aed", cursor: "pointer", textDecoration: "underline" }}
+            style={{ color: "#0d9488", cursor: "pointer", textDecoration: "underline" }}
           >
             View support resources →
           </span>
