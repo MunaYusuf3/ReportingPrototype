@@ -1,6 +1,7 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { formatReason, formatAffected, formatPattern, API_BASE } from "../utils";
+import { reasons, affected, frequency, apiUrl } from "../utils";
+import ProgressBar from "../components/ProgressBar";
 
 function ReportConfirmationPage() {
   const location = useLocation();
@@ -8,21 +9,19 @@ function ReportConfirmationPage() {
 
   const post = location.state?.post;
   const reason = location.state?.reason;
-  const affected = location.state?.affected;
+  const affectedWho = location.state?.affected;
   const pattern = location.state?.pattern;
   const extraDetails = location.state?.extraDetails;
 
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
   if (!post || !reason) {
     return (
       <div className="page">
         <div className="card">
-          <h1 className="page-title">Missing report information</h1>
-          <p className="page-subtitle">
-            Go back and complete the report details first.
-          </p>
+          <h1 className="page-title">Something went wrong</h1>
+          <p className="page-subtitle">Go back and start the report again.</p>
           <div className="button-row">
             <button className="button-secondary" onClick={() => navigate("/")}>
               Go back
@@ -32,18 +31,19 @@ function ReportConfirmationPage() {
       </div>
     );
   }
-  const buildDescription = () =>
-    [
-      `Affected: ${affected || "Not provided"}`,
-      `Pattern: ${pattern || "Not provided"}`,
-      `Extra details: ${extraDetails?.trim() || "None"}`,
-    ].join("\n");
 
-  const handleConfirm = async () => {
-    setIsSubmitting(true);
+  const buildDescription = () => {
+    const who = affectedWho || "Not provided";
+    const freq = pattern || "Not provided";
+    const extra = extraDetails?.trim() || "None";
+    return `Affected: ${who}\nPattern: ${freq}\nExtra details: ${extra}`;
+  };
+
+  const submitReport = async () => {
+    setLoading(true);
     setError("");
 
-    const payload = {
+    const reportData = {
       platform: post.reported_account?.platform,
       username: post.reported_account?.username,
       content_id: post.content_id,
@@ -51,14 +51,14 @@ function ReportConfirmationPage() {
       text: post.text,
       category: reason,
       description: buildDescription(),
-      reporter_id: "", 
+      reporter_id: "",
     };
 
     try {
-      const response = await fetch(`${API_BASE}/api/reports/submit/`, {
+      const response = await fetch(`${apiUrl}/api/reports/submit/`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
+        body: JSON.stringify(reportData),
       });
 
       const data = await response.json();
@@ -66,21 +66,22 @@ function ReportConfirmationPage() {
 
       navigate("/report/success", { state: { post, reason } });
     } catch (err) {
-      console.error("Submit error:", err);
-      setError(err.message || "Something went wrong. Please try again.");
+      console.error(err);
+      setError("Something went wrong. Please try again.");
     } finally {
-      setIsSubmitting(false);
+      setLoading(false);
     }
   };
 
   return (
     <div className="page">
       <div className="card">
+        <ProgressBar current={4} total={5} />
         <h1 className="page-title">Confirm your report</h1>
         <p className="page-subtitle">
-          Review the details below before sending. You can go back to make
-          changes.
+          Check the details below before sending. You can go back to make changes.
         </p>
+
         <h2 className="section-title">Content</h2>
         <div className="summary-box">
           <div className="summary-item">
@@ -96,16 +97,17 @@ function ReportConfirmationPage() {
             <strong>Content:</strong> {post.text}
           </div>
         </div>
+
         <h2 className="section-title">Your report</h2>
         <div className="summary-box">
           <div className="summary-item">
-            <strong>Category:</strong> {formatReason(reason)}
+            <strong>Category:</strong> {reasons(reason)}
           </div>
           <div className="summary-item">
-            <strong>Who is affected:</strong> {formatAffected(affected)}
+            <strong>Who is affected:</strong> {affected(affectedWho)}
           </div>
           <div className="summary-item">
-            <strong>Behaviour pattern:</strong> {formatPattern(pattern)}
+            <strong>Behaviour pattern:</strong> {frequency(pattern)}
           </div>
           <div className="summary-item">
             <strong>Additional details:</strong>{" "}
@@ -123,10 +125,10 @@ function ReportConfirmationPage() {
         <div className="button-row">
           <button
             className="button-secondary"
-            disabled={isSubmitting}
+            disabled={loading}
             onClick={() =>
               navigate("/report/nextsteps", {
-                state: { post, reason, affected, pattern, extraDetails },
+                state: { post, reason, affected: affectedWho, pattern, extraDetails },
               })
             }
           >
@@ -134,10 +136,10 @@ function ReportConfirmationPage() {
           </button>
           <button
             className="button-primary"
-            disabled={isSubmitting}
-            onClick={handleConfirm}
+            disabled={loading}
+            onClick={submitReport}
           >
-            {isSubmitting ? "Submitting..." : "Confirm report"}
+            {loading ? "Submitting..." : "Confirm report"}
           </button>
         </div>
       </div>
