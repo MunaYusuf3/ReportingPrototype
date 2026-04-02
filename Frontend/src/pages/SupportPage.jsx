@@ -27,7 +27,7 @@ function SupportPage() {
               rel="noreferrer"
               style={{
                 fontSize: "13px",
-                colour:"#0d9488",
+                color:"#0d9488",
                 marginTop: "6px",
                 display: "block",
               }}
@@ -48,7 +48,7 @@ function SupportPage() {
               rel="noreferrer"
               style={{
                 fontSize: "13px",
-                colour:"#0d9488",
+                color:"#0d9488",
                 marginTop: "6px",
                 display: "block",
               }}
@@ -73,7 +73,7 @@ function SupportPage() {
               rel="noreferrer"
               style={{
                 fontSize: "13px",
-                colour:"#0d9488",
+                color:"#0d9488",
                 marginTop: "6px",
                 display: "block",
               }}
@@ -94,7 +94,7 @@ function SupportPage() {
               rel="noreferrer"
               style={{
                 fontSize: "13px",
-                colour:"#0d9488",
+                color:"#0d9488",
                 marginTop: "6px",
                 display: "block",
               }}
