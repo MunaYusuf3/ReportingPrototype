@@ -1,6 +1,5 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
-import ProgressBar from "../components/ProgressBar";
 
 function MoreHelpPage() {
   const location = useLocation();
@@ -47,7 +46,6 @@ function MoreHelpPage() {
   return (
     <div className="page">
       <div className="card">
-        <ProgressBar current={1} total={5} />
         <h1 className="page-title">Need help choosing?</h1>
         <p className="page-subtitle">
           Answer these two questions and we'll suggest a category for you.
