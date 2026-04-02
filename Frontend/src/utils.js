@@ -1,6 +1,6 @@
 // Shared helpers and config used across the reporting flow 
 
-export const formatReason = (value) => {
+export const reasons = (value) => {
     const labels = {
       harassment_or_bullying: "Harassment or bullying",
       hate_or_discrimination: "Hate or discrimination",
@@ -15,7 +15,7 @@ export const formatReason = (value) => {
   };
   
 
-  export const formatAffected = (value) => {
+  export const affected = (value) => {
     const labels = {
       me: "This targets me",
       someone_else: "This targets someone else",
@@ -25,7 +25,7 @@ export const formatReason = (value) => {
     return labels[value] || value;
   };
   
-  export const formatPattern = (value) => {
+  export const frequency = (value) => {
     const labels = {
       once: "This happened once",
       repeated: "This is repeated behaviour",
@@ -35,5 +35,5 @@ export const formatReason = (value) => {
   };
   
 
-  export const API_BASE = "http://127.0.0.1:8000";
+  export const apiUrl = "http://127.0.0.1:8000";
   

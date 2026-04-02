@@ -1,9 +1,12 @@
 import { useLocation, useNavigate } from "react-router-dom";
+import { useState } from "react";
+import "./styling/OptionsPage.css";
 
 function OptionsPage() {
   const location = useLocation();
   const navigate = useNavigate();
   const post = location.state?.post;
+  const [showPrivacy, setShowPrivacy] = useState(false);
 
   if (!post) {
     return (
@@ -11,9 +14,8 @@ function OptionsPage() {
         <div className="card">
           <h1 className="page-title">No content selected</h1>
           <p className="page-subtitle">
-            Go back to the feed and choose a post or message first.
+            please choose a post or message first from the feed
           </p>
-
           <div className="button-row">
             <button className="button-secondary" onClick={() => navigate("/")}>
               Go back
@@ -24,32 +26,72 @@ function OptionsPage() {
     );
   }
 
-  const platform = post.reported_account?.platform;
-
-  const goToReportReasons = () => {
-    navigate("/report/reason", {
-      state: { post },
-    });
-  };
-
-  const goToSoftReport = () => {
-    navigate("/report/softreport", {
-      state: { post },
-    });
-  };
+  const platform = post.reported_account?.platform?.toLowerCase();
 
   return (
     <div className="page">
       <div className="card">
+
+        {showPrivacy && (
+          <div className="modal-overlay">
+            <div className="modal-box">
+              <h2>
+                What happens when you report
+              </h2>
+              <p>
+                Before you report here's what WhatsApp can and can't see:
+              </p>
+
+              <div className="modal-options">
+                <div className="option-card">
+                  <div className="option-title">Only the reported messages are seen</div>
+                  <div className="option-description">
+                    The specific messages you report may be reviewed by WhatsApp's moderation team.
+                  </div>
+                </div>
+                <div className="option-card">
+                  <div className="option-title">The person won't know it was you</div>
+                  <div className="option-description">
+                    The person you report will not be told that you reported them.
+                  </div>
+                </div>
+                <div className="option-card">
+                  <div className="option-title">Your other chats aren't affected</div>
+                  <div className="option-description">
+                    Only the reported messages are shared. The rest of your conversations are not affected.
+                  </div>
+                </div>
+              </div>
+
+              <button
+                className="button-primary"
+                style={{ width: "100%" }}
+                onClick={() => setShowPrivacy(false)}
+              >
+                Got it
+              </button>
+            </div>
+          </div>
+        )}
+
         <h1 className="page-title">What would you like to do?</h1>
         <p className="page-subtitle">
-          Choose an action for this content. Some options remove or limit future
-          contact, while others send a report for review.
+          What do you want to do about this?
         </p>
+
+        {platform === "whatsapp" && (
+          <button
+            type="button"
+            className="privacy-link"
+            onClick={() => setShowPrivacy(true)}
+          >
+            What information is shared when you report?
+          </button>
+        )}
 
         <div className="summary-box">
           <div className="summary-item">
-            <strong>Platform:</strong> {platform}
+            <strong>Platform:</strong> {post.reported_account?.platform}
           </div>
           <div className="summary-item">
             <strong>User:</strong> {post.reported_account?.username}
@@ -59,7 +101,11 @@ function OptionsPage() {
           </div>
         </div>
 
-        <h2 className="section-title">Available actions</h2>
+        <p className="helper-text" style={{ marginTop: "12px" }}>
+          Your identity will not be shared with the reported user.
+        </p>
+        
+        <h2 className="section-title">Your options</h2>
 
         <div className="option-list">
           {platform === "whatsapp" && (
@@ -74,7 +120,7 @@ function OptionsPage() {
               <button
                 className="option-card"
                 type="button"
-                onClick={goToReportReasons}
+                onClick={() => navigate("/report/reason", { state: { post } })}
               >
                 <div className="option-title">Block and report</div>
                 <div className="option-description">
@@ -99,7 +145,7 @@ function OptionsPage() {
               <button
                 className="option-card"
                 type="button"
-                onClick={goToReportReasons}
+                onClick={() => navigate("/report/reason", { state: { post } })}
               >
                 <div className="option-title">Report this message</div>
                 <div className="option-description">
@@ -110,12 +156,11 @@ function OptionsPage() {
               <button
                 className="option-card"
                 type="button"
-                onClick={goToSoftReport}
+                onClick={() => navigate("/report/softreport", { state: { post } })}
               >
                 <div className="option-title">Flag behaviour for review</div>
                 <div className="option-description">
-                  Raise a concern even if you are not sure it clearly breaks the
-                  rules.
+                  Raise a concern even if you are not sure it clearly breaks the rules.
                 </div>
               </button>
             </>
@@ -133,7 +178,7 @@ function OptionsPage() {
               <button
                 className="option-card"
                 type="button"
-                onClick={goToReportReasons}
+                onClick={() => navigate("/report/reason", { state: { post } })}
               >
                 <div className="option-title">Report this post</div>
                 <div className="option-description">
@@ -158,12 +203,11 @@ function OptionsPage() {
               <button
                 className="option-card"
                 type="button"
-                onClick={goToSoftReport}
+                onClick={() => navigate("/report/softreport", { state: { post } })}
               >
                 <div className="option-title">Flag behaviour for review</div>
                 <div className="option-description">
-                  Mark this as concerning without making a formal report straight
-                  away.
+                  Mark this as concerning without making a formal report straight away.
                 </div>
               </button>
             </>
