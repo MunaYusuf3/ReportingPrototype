@@ -11,7 +11,7 @@ import ReportConfirmationPage from "./pages/ReportConfirmationPage";
 import SuccessPage from "./pages/SuccessPage";
 import MoreHelpPage from "./pages/MoreHelpPage";
 import SuggestedReportingCategoryPage from "./pages/SuggestedReportingCategoryPage";
-
+import SupportPage from "./pages/SupportPage";
 function App() {
   return (
     <Router>
@@ -26,6 +26,7 @@ function App() {
         <Route path="/report/nextsteps" element={<NextStepsPage />} />
         <Route path="/report/confirmation" element={<ReportConfirmationPage />} />
         <Route path="/report/success" element={<SuccessPage />} />
+        <Route path="/report/support" element={<SupportPage />} />
       </Routes>
     </Router>
   );

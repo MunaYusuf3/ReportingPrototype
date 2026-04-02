@@ -1,17 +1,25 @@
 import { useLocation, useNavigate } from "react-router-dom";
+import { reasons, affected, frequency } from "../utils";
+import ProgressBar from "../components/ProgressBar";
 
-function OptionsPage() {
+function NextStepsPage() {
   const location = useLocation();
   const navigate = useNavigate();
-  const post = location.state?.post;
 
-  if (!post) {
+  const post = location.state?.post;
+  const reason = location.state?.reason;
+  const affectedWho = location.state?.affected;
+  const pattern = location.state?.pattern;
+  const extraDetails = location.state?.extraDetails;
+
+  if (!post || !reason) {
     return (
       <div className="page">
         <div className="card">
-          <h1 className="page-title">No content selected</h1>
+          <ProgressBar current={3} total={5} />
+          <h1 className="page-title">Something went wrong</h1>
           <p className="page-subtitle">
-            Go back to the feed and choose a post or message first.
+            Go back and complete the earlier steps first.
           </p>
           <div className="button-row">
             <button className="button-secondary" onClick={() => navigate("/")}>
@@ -23,154 +31,96 @@ function OptionsPage() {
     );
   }
 
-  const platform = post.reported_account?.platform?.toLowerCase();
-
   return (
     <div className="page">
       <div className="card">
-        <h1 className="page-title">What would you like to do?</h1>
+        <ProgressBar current={3} total={5} />
+        <h1 className="page-title">What happens after you report</h1>
         <p className="page-subtitle">
-          Choose an action for this content. Some options remove or limit future
-          contact, while others send a report for review.
+          Before you confirm, here is what to expect once your report is sent.
         </p>
 
         <div className="summary-box">
           <div className="summary-item">
-            <strong>Platform:</strong> {post.reported_account?.platform}
+            <strong>Category:</strong> {reasons(reason)}
           </div>
           <div className="summary-item">
-            <strong>User:</strong> {post.reported_account?.username}
+            <strong>Who is affected:</strong> {affected(affectedWho)}
           </div>
           <div className="summary-item">
-            <strong>Content:</strong> {post.text}
+            <strong>Behaviour pattern:</strong> {frequency(pattern)}
+          </div>
+          <div className="summary-item">
+            <strong>Additional details:</strong>{" "}
+            {extraDetails?.trim() ? extraDetails : "Not provided"}
           </div>
         </div>
 
-        <h2 className="section-title">Available actions</h2>
+        <h2 className="section-title">What happens next</h2>
 
         <div className="option-list">
-          {platform === "whatsapp" && (
-            <>
-              <button className="option-card" type="button">
-                <div className="option-title">Block this contact</div>
-                <div className="option-description">
-                  Stop this person from contacting you.
-                </div>
-              </button>
+          <div className="option-card">
+            <div className="option-title">1. Your report will be reviewed</div>
+            <div className="option-description">
+              Reports are usually looked at within 24–48 hours. The context
+              you provided helps moderators understand the situation.
+            </div>
+          </div>
 
-              {/* Block and report goes straight to the category selection */}
-              <button
-                className="option-card"
-                type="button"
-                onClick={() =>
-                  navigate("/report/reason", { state: { post } })
-                }
+          <div className="option-card">
+            <div className="option-title">2. Action may be taken</div>
+            <div className="option-description">
+              If the content breaks the rules, action will be taken. We may
+              not always be able to tell you the outcome but your report
+              does make a difference.
+            </div>
+          </div>
+
+          <div className="option-card">
+            <div className="option-title">3. You can still protect yourself</div>
+            <div className="option-description">
+              You don't have to wait. You can block or mute this person
+              while your report is being reviewed.
+            </div>
+          </div>
+
+          <div className="option-card">
+            <div className="option-title">4. Support is there if you need it</div>
+              <div className="option-description">
+                If this has affected you, support resources are available.
+                You don't have to deal with this alone.
+              </div>
+              <span
+                onClick={() => navigate("/report/support")}
+                style={{ fontSize: "13px", color: "#7c3aed", cursor: "pointer", textDecoration: "underline", marginTop: "6px", display: "block" }}
               >
-                <div className="option-title">Block and report</div>
-                <div className="option-description">
-                  Block this contact and submit a report for review.
-                </div>
-              </button>
+              View support resources →
+              </span>
+            </div>
+          </div>
 
-              <button className="option-card" type="button">
-                <div className="option-title">Leave this chat</div>
-                <div className="option-description">
-                  Exit the conversation without sending a report.
-                </div>
-              </button>
-
-              <button className="option-card" type="button">
-                <div className="option-title">Mute notifications</div>
-                <div className="option-description">
-                  Silence alerts from this chat.
-                </div>
-              </button>
-
-              <button
-                className="option-card"
-                type="button"
-                onClick={() =>
-                  navigate("/report/reason", { state: { post } })
-                }
-              >
-                <div className="option-title">Report this message</div>
-                <div className="option-description">
-                  Report this specific message for review.
-                </div>
-              </button>
-
-              <button
-                className="option-card"
-                type="button"
-                onClick={() =>
-                  navigate("/report/softreport", { state: { post } })
-                }
-              >
-                <div className="option-title">Flag behaviour for review</div>
-                <div className="option-description">
-                  Raise a concern even if you are not sure it clearly breaks the
-                  rules.
-                </div>
-              </button>
-            </>
-          )}
-
-          {platform === "instagram" && (
-            <>
-              <button className="option-card" type="button">
-                <div className="option-title">Block this account</div>
-                <div className="option-description">
-                  Prevent this account from interacting with you.
-                </div>
-              </button>
-
-              <button
-                className="option-card"
-                type="button"
-                onClick={() =>
-                  navigate("/report/reason", { state: { post } })
-                }
-              >
-                <div className="option-title">Report this post</div>
-                <div className="option-description">
-                  Send this content for review.
-                </div>
-              </button>
-
-              <button className="option-card" type="button">
-                <div className="option-title">Mute this account</div>
-                <div className="option-description">
-                  Hide future posts and stories from this account.
-                </div>
-              </button>
-
-              <button className="option-card" type="button">
-                <div className="option-title">Hide similar content</div>
-                <div className="option-description">
-                  Reduce similar content appearing in your feed.
-                </div>
-              </button>
-
-              <button
-                className="option-card"
-                type="button"
-                onClick={() =>
-                  navigate("/report/softreport", { state: { post } })
-                }
-              >
-                <div className="option-title">Flag behaviour for review</div>
-                <div className="option-description">
-                  Mark this as concerning without making a formal report straight
-                  away.
-                </div>
-              </button>
-            </>
-          )}
-        </div>
+        <p className="helper-text" style={{ marginTop: "12px" }}>
+          Your identity will not be shared with the person you are reporting.
+        </p>
 
         <div className="button-row">
-          <button className="button-secondary" onClick={() => navigate("/")}>
-            Back to feed
+          <button
+            className="button-secondary"
+            onClick={() =>
+              navigate("/report/moreinfo", { state: { post, reason } })
+            }
+          >
+            Go back
+          </button>
+          <button
+            className="button-primary"
+            onClick={() =>
+              navigate("/report/confirmation", {
+                state: { post, reason, affected: affectedWho, pattern, extraDetails },
+              })
+            }
+          >
+            Continue
           </button>
         </div>
       </div>
@@ -178,4 +128,4 @@ function OptionsPage() {
   );
 }
 
-export default OptionsPage;
+export default NextStepsPage;
