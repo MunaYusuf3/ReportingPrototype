@@ -1,6 +1,7 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { formatReason } from "../utils";
+import { reasons } from "../utils";
+import ProgressBar from "../components/ProgressBar";
 
 function MoreInformationPage() {
   const location = useLocation();
@@ -17,10 +18,8 @@ function MoreInformationPage() {
     return (
       <div className="page">
         <div className="card">
-          <h1 className="page-title">Missing report details</h1>
-          <p className="page-subtitle">
-            Go back and choose the content and category first.
-          </p>
+          <h1 className="page-title">Something went wrong</h1>
+          <p className="page-subtitle">Go back and start the report again.</p>
           <div className="button-row">
             <button className="button-secondary" onClick={() => navigate("/")}>
               Go back
@@ -30,56 +29,27 @@ function MoreInformationPage() {
       </div>
     );
   }
-  const goToNextSteps = (options = {}) => {
+
+  const handleContinue = () => {
     navigate("/report/nextsteps", {
-      state: {
-        post,
-        reason,
-        affected: options.skip ? "" : affected,
-        pattern: options.skip ? "" : pattern,
-        extraDetails: options.skip ? "" : extraDetails,
-      },
+      state: { post, reason, affected, pattern, extraDetails },
     });
   };
 
-  const WHO_OPTIONS = [
-    {
-      value: "me",
-      title: "This targets me",
-      description: "The content is directed at me or affects me personally.",
-    },
-    {
-      value: "someone_else",
-      title: "This targets someone else",
-      description: "The content affects another person or group.",
-    },
-    {
-      value: "prefer_not_to_say",
-      title: "Prefer not to say",
-      description: "Continue without sharing who is affected.",
-    },
-  ];
-
-  const PATTERN_OPTIONS = [
-    {
-      value: "once",
-      title: "This happened once",
-      description: "This appears to be a one-off incident.",
-    },
-    {
-      value: "repeated",
-      title: "This is repeated behaviour",
-      description: "Similar behaviour has happened before or keeps happening.",
-    },
-  ];
+  const handleSkip = () => {
+    navigate("/report/nextsteps", {
+      state: { post, reason, affected: "", pattern: "", extraDetails: "" },
+    });
+  };
 
   return (
     <div className="page">
       <div className="card">
-        <h1 className="page-title">Tell us a little more</h1>
+      <ProgressBar current={2} total={5} />
+        <h1 className="page-title">A little more detail</h1>
         <p className="page-subtitle">
-          This extra context helps make the report easier to review. Everything
-          here is optional — you can skip if you prefer.
+          These are optional, only answer what feels relevent<br/>
+          You don't have to share anything you're comfortable with.
         </p>
 
         <div className="summary-box">
@@ -90,69 +60,69 @@ function MoreInformationPage() {
             <strong>User:</strong> {post.reported_account?.username}
           </div>
           <div className="summary-item">
-            <strong>Category:</strong> {formatReason(reason)}
+            <strong>Category:</strong> {reasons(reason)}
           </div>
         </div>
 
         <h2 className="section-title">Who is affected?</h2>
         <div className="option-list">
-          {WHO_OPTIONS.map((opt) => (
-            <button
-              key={opt.value}
-              type="button"
-              className={`option-card ${affected === opt.value ? "selected" : ""}`}
-              onClick={() =>
-                // Clicking the selected option again deselects it
-                setAffected(affected === opt.value ? "" : opt.value)
-              }
-            >
-              <div className="option-title">{opt.title}</div>
-              <div className="option-description">{opt.description}</div>
-            </button>
-          ))}
+          <button
+            type="button"
+            className={`option-card ${affected === "me" ? "selected" : ""}`}
+            onClick={() => setAffected(affected === "me" ? "" : "me")}
+          >
+            <div className="option-title">This targets me</div>
+          </button>
+
+          <button
+            type="button"
+            className={`option-card ${affected === "someone_else" ? "selected" : ""}`}
+            onClick={() => setAffected(affected === "someone_else" ? "" : "someone_else")}
+          >
+            <div className="option-title">This targets someone else</div>
+            <div className="option-description"> e.g you witnessed this happening to another person</div>
+          </button>
+
+          <button
+            type="button"
+            className={`option-card ${affected === "prefer_not_to_say" ? "selected" : ""}`}
+            onClick={() => setAffected(affected === "prefer_not_to_say" ? "" : "prefer_not_to_say")}
+          >
+            <div className="option-title">Prefer not to say</div>
+          </button>
         </div>
 
-        <h2 className="section-title">Behaviour pattern</h2>
+        <h2 className="section-title">Has this happened before?</h2>
         <div className="option-list">
-          {PATTERN_OPTIONS.map((opt) => (
-            <button
-              key={opt.value}
-              type="button"
-              className={`option-card ${pattern === opt.value ? "selected" : ""}`}
-              onClick={() =>
-                setPattern(pattern === opt.value ? "" : opt.value)
-              }
-            >
-              <div className="option-title">{opt.title}</div>
-              <div className="option-description">{opt.description}</div>
-            </button>
-          ))}
+          <button
+            type="button"
+            className={`option-card ${pattern === "once" ? "selected" : ""}`}
+            onClick={() => setPattern(pattern === "once" ? "" : "once")}
+          >
+            <div className="option-title">Just this once</div>
+          </button>
+
+          <button
+            type="button"
+            className={`option-card ${pattern === "repeated" ? "selected" : ""}`}
+            onClick={() => setPattern(pattern === "repeated" ? "" : "repeated")}
+          >
+            <div className="option-title">This keeps happening</div>
+          </button>
         </div>
 
-        <h2 className="section-title">Anything else?</h2>
-        <label htmlFor="extraDetails">Additional context (optional)</label>
+        <h2 className="section-title">Anything else to add?</h2>
         <textarea
-          id="extraDetails"
-          placeholder="Add more detail if you want to. This is completely optional."
+          placeholder="Optional - add any extra context here"
           value={extraDetails}
           onChange={(e) => setExtraDetails(e.target.value)}
         />
 
-        <p className="helper-text">
-          You can continue without answering any of the questions above.
-        </p>
-
         <div className="button-row">
-          <button
-            className="button-secondary"
-            onClick={() => goToNextSteps({ skip: true })}
-          >
+          <button className="button-secondary" onClick={handleSkip}>
             Skip
           </button>
-          <button
-            className="button-primary"
-            onClick={() => goToNextSteps()}
-          >
+          <button className="button-primary" onClick={handleContinue}>
             Continue
           </button>
         </div>
