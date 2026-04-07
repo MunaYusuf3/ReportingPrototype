@@ -27,7 +27,7 @@ function SuccessPage() {
           <>
             <h2 className="section-title">What happens next</h2>
             <div className="option-list">
-              <div className="option-card">
+              <div className="option-card-static">
                 <div className="option-title">1. Your report is in the queue</div>
                 <div className="option-description">
                   Reports are usually reviewed within 24–48 hours. More complex
@@ -35,7 +35,7 @@ function SuccessPage() {
                 </div>
               </div>
 
-              <div className="option-card">
+              <div className="option-card-static">
                 <div className="option-title">2. A moderator will review it</div>
                 <div className="option-description">
                   They will look at the content and the context you provided to
@@ -43,7 +43,7 @@ function SuccessPage() {
                 </div>
               </div>
 
-              <div className="option-card">
+              <div className="option-card-static">
                 <div className="option-title">3. Action will be taken if needed</div>
                 <div className="option-description">
                   If the content breaks the rules, it may be removed or the
