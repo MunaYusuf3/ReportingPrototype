@@ -35,5 +35,5 @@ export const reasons = (value) => {
   };
   
 
-  export const apiUrl = "reportingprototypebackend.up.railway.app";
+  export const apiUrl = "https://reportingprototypebackend.up.railway.app";
   
