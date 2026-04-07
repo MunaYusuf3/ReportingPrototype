@@ -74,6 +74,15 @@ body {
   box-shadow: 0 4px 12px rgba(124, 58, 237, 0.12);
 }
 
+.option-card-static {
+  width: 100%;
+  border: 1px solid #d1d5db;
+  border-radius: 12px;
+  padding: 16px;
+  background: #fff;
+  text-align: left;
+}
+
 .option-card.selected {
   border-color: #0d9488;
   background: #f0fdfa;

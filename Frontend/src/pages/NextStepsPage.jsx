@@ -59,7 +59,7 @@ function NextStepsPage() {
         <h2 className="section-title">What happens next</h2>
 
         <div className="option-list">
-          <div className="option-card">
+          <div className="option-card-static">
             <div className="option-title">1. Your report will be reviewed</div>
             <div className="option-description">
               Reports are usually looked at within 24–48 hours. The context
@@ -67,7 +67,7 @@ function NextStepsPage() {
             </div>
           </div>
 
-          <div className="option-card">
+          <div className="option-card-static">
             <div className="option-title">2. Action may be taken</div>
             <div className="option-description">
               If the content breaks the rules, action will be taken. We may
@@ -76,7 +76,7 @@ function NextStepsPage() {
             </div>
           </div>
 
-          <div className="option-card">
+          <div className="option-card-static">
             <div className="option-title">3. You can still protect yourself</div>
             <div className="option-description">
               You don't have to wait. You can block or mute this person
@@ -84,7 +84,7 @@ function NextStepsPage() {
             </div>
           </div>
 
-          <div className="option-card">
+          <div className="option-card-static">
             <div className="option-title">4. Support is there if you need it</div>
               <div className="option-description">
                 If this has affected you, support resources are available.
