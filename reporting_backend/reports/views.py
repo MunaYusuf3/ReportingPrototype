@@ -78,14 +78,11 @@ class SubmitReportView(APIView):
 
 class ContentItemListView(ListAPIView):
     def get(self,request):
-        items = ContentItem.objects.all()
-        serializer = ContentItemSerializer(items, many = True)
-        return Response(serializer.data)
-
+        queryset = ContentItem.objects.all()
+        serializer_class = ContentItemSerializer
 
 
 class ReportListView(ListAPIView):
     def get(self,request):
-        reports = Report.objects.all().order_by("-created_at")
-        serializer = ReportSerializer(reports, many = True)
-        return Response(serializer.data)
+        rqueryset = Report.objects.all().order_by("-created_at")
+        serializer_class = ReportSerializer
