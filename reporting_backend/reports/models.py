@@ -1,9 +1,13 @@
 from django.db import models
 
-
 class ReportedAccount(models.Model):
-    # stores reported accounts and tracks their moderation status
-    
+
+    """
+    Stores the reported account.
+    Tracks which platform the account belongs to and its moderation status.
+
+    """
+   
     PLATFORM_CHOICES = [
         ("instagram", "Instagram"),
         ("whatsapp", "WhatsApp"),
@@ -26,7 +30,13 @@ class ReportedAccount(models.Model):
 
 
 class ContentItem(models.Model):
-    # stores the type of content thats being reported
+
+    """
+    Stores the type of content assosiated with the report.
+    Tracks the unique ID so it can be reported more than once.
+
+    """
+
     CONTENT_TYPE_CHOICES = [
         ("message", "Message"),
         ("post", "Post"),
@@ -46,8 +56,15 @@ class ContentItem(models.Model):
         return f"{self.content_type} – {self.content_id}"
 
 
+
 class Report(models.Model):
-    # stores report submitted through the reporting flow
+
+    """
+    Stores the report submitted through the reporting flow.
+    Tracks the category, any additional context and status.
+
+    """
+
     CATEGORY_CHOICES = [
         ("harassment_or_bullying", "Harassment or Bullying"),
         ("hate_or_discrimination", "Hate or Discrimination"),

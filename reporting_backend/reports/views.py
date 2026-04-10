@@ -11,6 +11,10 @@ from .serializers import ContentItemSerializer, ReportSerializer
 
 class SubmitReportView(APIView):
 
+    """
+    Handles reports, creates or reuses the reported account and content item then logs the report.
+    """
+
     def post(self, request):
         data = request.data
 
@@ -77,10 +81,14 @@ class SubmitReportView(APIView):
 
 
 class ContentItemListView(ListAPIView):
+# Returns all content iterm (used by admin)
+
         queryset = ContentItem.objects.all()
         serializer_class = ContentItemSerializer
 
 
 class ReportListView(ListAPIView):
+# Returns all reports with the newest first
+
         queryset = Report.objects.all().order_by("-created_at")
         serializer_class = ReportSerializer
