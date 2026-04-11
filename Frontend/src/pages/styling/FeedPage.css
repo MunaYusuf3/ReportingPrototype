@@ -6,9 +6,9 @@
     align-items: center;
     justify-content: center;
     padding: 24px 16px;
-  }
+}
   
-  .instagram-card {
+.instagram-card {
     width: 90vw;
     max-width: 600px;
     margin: 0 auto;
@@ -18,42 +18,38 @@
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
     cursor: pointer;
     position: relative;
-  }
+}
   
-  .instagram-header {
+.instagram-header {
     padding: 10px 14px;
     display: flex;
     align-items: center;
     justify-content: space-between;
     border-bottom: 1px solid #f0f0f0;
-  }
+}
   
-  .instagram-user {
+.instagram-user {
     padding: 10px 14px;
     display: flex;
     align-items: center;
     gap: 10px;
-  }
+}
   
-  .instagram-avatar {
+.instagram-avatar {
     width: 36px;
     height: 36px;
     border-radius: 50%;
     background: linear-gradient(45deg, #f09433, #dc2743, #bc1888);
-  }
+}
   
-  .instagram-image {
+.instagram-image {
     position: relative;
     background: #e8e8e8;
     min-height: 40vh;
-  }
+}
+
   
-  .instagram-image-blur {
-    padding: 20px;
-    filter: blur(4px);
-  }
-  
-  .instagram-image-overlay {
+.instagram-image-overlay {
     position: absolute;
     top: 0;
     left: 0;
@@ -63,25 +59,29 @@
     align-items: center;
     justify-content: center;
     background: rgba(0, 0, 0, 0.15);
-  }
+}
   
-  .instagram-image-overlay p {
+.instagram-image-overlay p {
     color: white;
     font-weight: 600;
     font-size: 14px;
     text-align: center;
     padding: 0 20px;
     text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
-  }
+}
   
-  .instagram-caption {
+.instagram-caption {
     padding: 10px 14px;
     border-top: 1px solid #f0f0f0;
     font-size: 13px;
-  }
+}
+
+.instagram-more {
+  margin-left: auto;
+  color: #999;
+}
   
-  
-  .whatsapp-card {
+.whatsapp-card {
     width: 90vw;
     max-width: 600px;
     margin: 0 auto;
@@ -91,132 +91,113 @@
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
     cursor: pointer;
     position: relative;
-  }
+}
   
-  .whatsapp-header {
+.whatsapp-header {
     background: #075e54;
     padding: 10px 14px;
     display: flex;
     align-items: center;
     gap: 10px;
     color: white;
-  }
+}
   
-  .whatsapp-avatar {
+.whatsapp-avatar {
     width: 36px;
     height: 36px;
     border-radius: 50%;
     background: #25d366;
-  }
+}
   
-  .whatsapp-chat {
+.whatsapp-chat {
     padding: 12px;
     min-height: 50vh;
-  }
+}
   
-  .whatsapp-received {
+.whatsapp-received {
     background: white;
     border-radius: 8px;
     padding: 8px 12px;
     max-width: 75%;
     margin-bottom: 8px;
-  }
+}
   
-  .whatsapp-sent-row {
+.whatsapp-sent-row {
     text-align: right;
     margin-bottom: 8px;
-  }
+}
   
-  .whatsapp-sent {
+.whatsapp-sent {
     background: #dcf8c6;
     border-radius: 8px;
     padding: 8px 12px;
     max-width: 75%;
     display: inline-block;
-  }
+}
   
-  .whatsapp-flagged {
+.whatsapp-flagged {
     background: white;
     border-radius: 8px;
     padding: 9px 12px;
     max-width: 75%;
     border: 1px solid #f0f0f0;
     margin-bottom: 8px;
-  }
+}
   
-  .whatsapp-flagged p {
+.whatsapp-flagged p {
     margin: 0;
     font-size: 13px;
     color: #333;
-  }
+}
   
-  .whatsapp-flagged span {
+.whatsapp-flagged span {
     display: block;
     margin-top: 4px;
     font-size: 11px;
     color: #999;
-  }
+}
   
-  .whatsapp-input {
+.whatsapp-input {
     background: #f0f0f0;
     padding: 8px 14px;
     display: flex;
     align-items: center;
     gap: 10px;
-  }
+}
   
-  .whatsapp-input-box {
+.whatsapp-input-box {
     flex: 1;
     background: white;
     border-radius: 20px;
     padding: 8px 14px;
     font-size: 13px;
     color: #999;
-  }
-  
-  .info-wrapper {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    z-index: 10;
-  }
-  
-  .info-circle {
-    background: rgba(0, 0, 0, 0.5);
-    color: white;
-    border-radius: 50%;
-    width: 24px;
-    height: 24px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 13px;
-    cursor: pointer;
-  }
-  
-  .info-popup {
-    position: absolute;
-    top: 30px;
-    right: 0;
-    background: white;
-    border: 1px solid #e5e7eb;
-    border-radius: 8px;
-    padding: 8px 12px;
-    font-size: 12px;
-    color: #333;
-    width: 180px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  }
-  
-  .feed-navigation {
+}
+
+.whatsapp-back {
+  font-size: 16px;
+}
+
+
+.whatsapp-received {
+  min-height: 36px;
+}
+
+.whatsapp-sent {
+  min-height: 36px;
+}
+.feed-navigation {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-top: 16px;
     width: 50vw;
     max-width: 600px;
-  }
+}
   
-  .feed-nav-button {
+.feed-nav-button {
     width: 80px;
-  }
+}
+
+
+  

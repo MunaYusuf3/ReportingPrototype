@@ -3,56 +3,22 @@ import { useNavigate } from "react-router-dom";
 import { apiUrl } from "../utils";
 import "./styling/FeedPage.css";
 
-function FakeContent() {
-  return (
-    <div style={{ padding: "8px 0" }}>
-      <div style={{ height: "10px", borderRadius: "6px", background: "#ccc", opacity: 0.4, marginBottom: "10px", width: "100%", filter: "blur(3px)" }} />
-      <div style={{ height: "10px", borderRadius: "6px", background: "#ccc", opacity: 0.4, marginBottom: "10px", width: "80%", filter: "blur(3px)" }} />
-      <div style={{ height: "10px", borderRadius: "6px", background: "#ccc", opacity: 0.4, marginBottom: "10px", width: "60%", filter: "blur(3px)" }} />
-      <div style={{ height: "10px", borderRadius: "6px", background: "#ccc", opacity: 0.4, marginBottom: "10px", width: "100%", filter: "blur(3px)" }} />
-      <div style={{ height: "10px", borderRadius: "6px", background: "#ccc", opacity: 0.4, marginBottom: "10px", width: "80%", filter: "blur(3px)" }} />
-    </div>
-  );
-}
 
-function InfoButton() {
-  const [open, setOpen] = useState(false);
-
-  return (
-    <div className="info-wrapper">
-      <div className="info-circle" onClick={(e) => { e.stopPropagation(); setOpen(!open); }}>
-        ℹ
-      </div>
-      {open && (
-        <div className="info-popup">
-          Tap the post to report harmful content
-        </div>
-      )}
-    </div>
-  );
-}
-
+// fake instagram page with reported content
 function InstagramPost({ post, onClick }) {
   return (
     <div className="instagram-card" onClick={onClick}>
-      <InfoButton />
-
       <div className="instagram-header">
         <span>Instagram</span>
       </div>
 
       <div className="instagram-user">
         <div className="instagram-avatar" />
-        <div>
-          {post.reported_account?.username}
-        </div>
-        <span style={{ marginLeft: "auto", color: "#999" }}>•••</span>
+        <div>{post.reported_account?.username}</div>
+        <span className="instagram-more">•••</span>
       </div>
 
       <div className="instagram-image">
-        <div className="instagram-image-blur">
-          <FakeContent count={8} color="#aaa" />
-        </div>
         <div className="instagram-image-overlay">
           <p>Tap the post to report harmful content</p>
         </div>
@@ -66,44 +32,32 @@ function InstagramPost({ post, onClick }) {
   );
 }
 
+// fake whatsapp chat with reported content
 function WhatsAppChat({ post, onClick }) {
   return (
     <div className="whatsapp-card" onClick={onClick}>
-      <InfoButton />
-
       <div className="whatsapp-header">
-        <span style={{ fontSize: "16px" }}>←</span>
+        <span className="whatsapp-back">←</span>
         <div className="whatsapp-avatar" />
-        <div>
-          <div>
-            {post.reported_account?.username}
-          </div>
-
-        </div>
+        <div>{post.reported_account?.username}</div>
       </div>
 
       <div className="whatsapp-chat">
-        <div className="whatsapp-received">
-          <FakeContent count={2} color="#999" />
-        </div>
+        <div className="whatsapp-received" />
 
         <div className="whatsapp-sent-row">
-          <div className="whatsapp-sent">
-            <FakeContent count={2} color="#888" />
-          </div>
+          <div className="whatsapp-sent" />
         </div>
 
-        <div className="whatsapp-flagged">
-          <p>{post.text}</p>
-          <span>Long press to report</span>
-        </div>
+      <div className="whatsapp-flagged">
+        <p>{post.text}</p>
+        <span>Long press to report</span>
+       </div>
 
-        <div className="whatsapp-sent-row">
-          <div className="whatsapp-sent">
-            <FakeContent count={1} color="#888" />
-          </div>
-        </div>
+      <div className="whatsapp-sent-row">
+          <div className="whatsapp-sent" />
       </div>
+    </div>
 
       <div className="whatsapp-input">
         <div className="whatsapp-input-box">Message</div>
@@ -112,6 +66,7 @@ function WhatsAppChat({ post, onClick }) {
   );
 }
 
+// main feedpage (loads post from the API and displays one post at a time for reporting)
 function FeedPage() {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -161,20 +116,20 @@ function FeedPage() {
             <WhatsAppChat post={currentPost} onClick={handleTap} />
           )}
 
-      <div className="feed-navigation">
-        <button
-          className="button-secondary feed-nav-button"
-          onClick={() => setCurrentIndex((i) => (i - 1 + posts.length) % posts.length)}
-        >
-          ←
-        </button>
-        <button
-          className="button-secondary feed-nav-button"
-          onClick={() => setCurrentIndex((i) => (i + 1) % posts.length)}
-        >
-          →
-        </button>
-      </div>
+          <div className="feed-navigation">
+            <button
+              className="button-secondary feed-nav-button"
+              onClick={() => setCurrentIndex((i) => (i - 1 + posts.length) % posts.length)}
+            >
+              ←
+            </button>
+            <button
+              className="button-secondary feed-nav-button"
+              onClick={() => setCurrentIndex((i) => (i + 1) % posts.length)}
+            >
+              →
+            </button>
+          </div>
         </>
       )}
     </div>
