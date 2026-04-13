@@ -35,12 +35,8 @@ function OptionsPage() {
         {showPrivacy && (
           <div className="modal-overlay">
             <div className="modal-box">
-              <h2>
-                What happens when you report
-              </h2>
-              <p>
-                Before you report here's what WhatsApp can and can't see:
-              </p>
+              <h2>What happens when you report</h2>
+              <p>Before you report here's what WhatsApp can and can't see:</p>
 
               <div className="modal-options">
                 <div className="option-card">
@@ -64,8 +60,7 @@ function OptionsPage() {
               </div>
 
               <button
-                className="button-primary"
-                style={{ width: "100%" }}
+                className="button-primary modal-confirm-button"
                 onClick={() => setShowPrivacy(false)}
               >
                 Got it
@@ -75,10 +70,6 @@ function OptionsPage() {
         )}
 
         <h1 className="page-title">What would you like to do?</h1>
-        <p className="page-subtitle">
-          What do you want to do about this?
-        </p>
-
         {platform === "whatsapp" && (
           <button
             type="button"
@@ -101,10 +92,10 @@ function OptionsPage() {
           </div>
         </div>
 
-        <p className="helper-text" style={{ marginTop: "12px" }}>
+        <p className="helper-text privacy-notice">
           Your identity will not be shared with the reported user.
         </p>
-        
+
         <h2 className="section-title">Your options</h2>
 
         <div className="option-list">
