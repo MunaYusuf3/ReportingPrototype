@@ -2,6 +2,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import "./styling/OptionsPage.css";
 
+//shows what actions are available depending on the platform
 function OptionsPage() {
   const location = useLocation();
   const navigate = useNavigate();
@@ -70,6 +71,8 @@ function OptionsPage() {
         )}
 
         <h1 className="page-title">What would you like to do?</h1>
+
+        {/* specific to Whatsapp, explains what gets shared when you report */}
         {platform === "whatsapp" && (
           <button
             type="button"
