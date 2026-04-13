@@ -1,6 +1,8 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import { reasons } from "../utils";
-import ProgressBar from "../components/ProgressBar";
+
+//displays the suggestsed category the system chooses
+//users have the option to go back and chnage their answers in the case they dont agrees with the option
 
 function SuggestedReportingCategoryPage() {
   const location = useLocation();
@@ -29,10 +31,6 @@ function SuggestedReportingCategoryPage() {
     <div className="page">
       <div className="card">
         <h1 className="page-title">Suggested category</h1>
-        <p className="page-subtitle">
-          Based on your answers, this might be the best fit.
-        </p>
-
         <div className="summary-box">
           <p>
             Based on your answers, this report may fall under:
@@ -42,7 +40,7 @@ function SuggestedReportingCategoryPage() {
           </p>
         </div>
 
-        <p>
+        <p className="helper-text">
           Not quite right? You can go back and pick a different category instead.
         </p>
 
@@ -55,9 +53,7 @@ function SuggestedReportingCategoryPage() {
           </button>
           <button
             className="button-primary"
-            onClick={() => navigate("/report/moreinfo", { state: 
-                                                            { post, 
-                                                              reason: suggested } })}
+            onClick={() => navigate("/report/moreinfo", { state: { post, reason: suggested } })}
           >
             Use this category
           </button>

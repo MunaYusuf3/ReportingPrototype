@@ -3,6 +3,7 @@ import { useState } from "react";
 import { reasons } from "../utils";
 import ProgressBar from "../components/ProgressBar";
 
+//collect optional extra info from users
 function MoreInformationPage() {
   const location = useLocation();
   const navigate = useNavigate();
@@ -48,7 +49,7 @@ function MoreInformationPage() {
       <ProgressBar current={2} total={5} />
         <h1 className="page-title">A little more detail</h1>
         <p className="page-subtitle">
-          These are optional, only answer what feels relevent<br/>
+          These are optional, only answer what feels relevent.<br/>
           You don't have to share anything you're comfortable with.
         </p>
 

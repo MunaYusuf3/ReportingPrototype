@@ -3,6 +3,10 @@ import { useState } from "react";
 import ProgressBar from "../components/ProgressBar";
 import "./styling/ReasonPage.css";
 
+//displays the categories with information and example as support
+//lets the user select which harm best represents the situation
+//categories vary slighly between platforms
+
 function ReasonPage() {
   const location = useLocation();
   const navigate = useNavigate();
@@ -51,8 +55,11 @@ function ReasonPage() {
 
         <h2 className="section-title">What best describes what happened?</h2>
 
-        <p className="helper-text" style={{ marginBottom: "12px" }}>
+        <p className="helper-text">
           If something felt wrong, it's worth reporting. Leave the rest to us.
+        </p>
+        <p className="helper-text">
+          Tap ℹ to see an example.
         </p>
 
         <div className="option-list">

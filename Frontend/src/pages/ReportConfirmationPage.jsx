@@ -3,6 +3,7 @@ import { useState } from "react";
 import { reasons, affected, frequency, apiUrl } from "../utils";
 import ProgressBar from "../components/ProgressBar";
 
+//shows a summary of what information is shared with moderators before fully submitting the report
 function ReportConfirmationPage() {
   const location = useLocation();
   const navigate = useNavigate();
@@ -32,7 +33,7 @@ function ReportConfirmationPage() {
     );
   }
 
-  const buildDescription = () => {
+  const formatDescription = () => {
     const who = affectedWho || "Not provided";
     const freq = pattern || "Not provided";
     const extra = extraDetails?.trim() || "None";
@@ -50,7 +51,7 @@ function ReportConfirmationPage() {
       content_type: post.content_type,
       text: post.text,
       category: reason,
-      description: buildDescription(),
+      description: formatDescription(),
       reporter_id: "",
     };
 

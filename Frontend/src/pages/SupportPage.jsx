@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 function SupportPage() {
   const navigate = useNavigate();
 
+  //links to external support
+
   return (
     <div className="page">
       <div className="card">
@@ -21,17 +23,7 @@ function SupportPage() {
               Support for people experiencing cyberbullying, online abuse and
               digital harassment.
             </div>
-            <a
-              href="https://www.cybersmile.org"
-              target="_blank"
-              rel="noreferrer"
-              style={{
-                fontSize: "13px",
-                color:"#0d9488",
-                marginTop: "6px",
-                display: "block",
-              }}
-            >
+            <a href="https://www.cybersmile.org" target="_blank" rel="noreferrer" className="resource-link">
               Visit Cybersmile →
             </a>
           </div>
@@ -42,17 +34,7 @@ function SupportPage() {
               A UK service that helps you report harmful content online and
               understand your options.
             </div>
-            <a
-              href="https://reportharmfulcontent.com"
-              target="_blank"
-              rel="noreferrer"
-              style={{
-                fontSize: "13px",
-                color:"#0d9488",
-                marginTop: "6px",
-                display: "block",
-              }}
-            >
+            <a href="https://reportharmfulcontent.com"target="_blank" rel="noreferrer" className="resource-link">
               Visit Report Harmful Content →
             </a>
           </div>
@@ -67,17 +49,7 @@ function SupportPage() {
               Available 24 hours a day if you are struggling or just need
               someone to listen. Call 116 123 for free.
             </div>
-            <a
-              href="https://www.samaritans.org"
-              target="_blank"
-              rel="noreferrer"
-              style={{
-                fontSize: "13px",
-                color:"#0d9488",
-                marginTop: "6px",
-                display: "block",
-              }}
-            >
+            <a href="https://www.samaritans.org"target="_blank" rel="noreferrer" className="resource-link">
               Visit Samaritans →
             </a>
           </div>
@@ -88,17 +60,8 @@ function SupportPage() {
               Mental health support and information for anyone going through
               a difficult time.
             </div>
-            <a
-              href="https://www.mind.org.uk"
-              target="_blank"
-              rel="noreferrer"
-              style={{
-                fontSize: "13px",
-                color:"#0d9488",
-                marginTop: "6px",
-                display: "block",
-              }}
-            >
+
+            <a href="https://www.mind.org.uk"target="_blank" rel="noreferrer" className="resource-link">
               Visit Mind →
             </a>
           </div>

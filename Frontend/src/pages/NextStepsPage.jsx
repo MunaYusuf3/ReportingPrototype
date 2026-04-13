@@ -2,6 +2,8 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { reasons, affected, frequency } from "../utils";
 import ProgressBar from "../components/ProgressBar";
 
+//page for transparency - explain the steps after reporting to users
+
 function NextStepsPage() {
   const location = useLocation();
   const navigate = useNavigate();
@@ -88,18 +90,15 @@ function NextStepsPage() {
             <div className="option-title">4. Support is there if you need it</div>
               <div className="option-description">
                 If this has affected you, support resources are available.
-                You don't have to deal with this alone.
+                You don't have to deal with this alone. 
               </div>
-              <span
-                onClick={() => navigate("/report/support")}
-                style={{ fontSize: "13px", color: "#0d9488", cursor: "pointer", textDecoration: "underline", marginTop: "6px", display: "block" }}
-              >
-              View support resources →
-              </span>
+              <button className="support-link" onClick={() => navigate("/report/support")}>
+                  View support resources →
+              </button>
             </div>
           </div>
 
-        <p className="helper-text" style={{ marginTop: "12px" }}>
+        <p className="helper-text">
           Your identity will not be shared with the person you are reporting.
         </p>
 

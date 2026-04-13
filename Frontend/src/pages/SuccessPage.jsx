@@ -1,5 +1,6 @@
 import { useLocation, useNavigate } from "react-router-dom";
 
+//confirmation page shown after soft report (flag) or  full report is submitted
 function SuccessPage() {
   const location = useLocation();
   const navigate = useNavigate();
@@ -70,13 +71,10 @@ function SuccessPage() {
           </div>
         )}
 
-        <p className="helper-text" style={{ marginTop: "12px" }}>
-          <span
-            onClick={() => navigate("/report/support")}
-            style={{ color: "#0d9488", cursor: "pointer", textDecoration: "underline" }}
-          >
+        <p className="helper-text">
+          <button className="support-link" onClick={() => navigate("/report/support")}>
             View support resources →
-          </span>
+          </button>
         </p>
 
         <div className="button-row">

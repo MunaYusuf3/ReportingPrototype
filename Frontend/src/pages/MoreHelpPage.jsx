@@ -1,6 +1,9 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
 
+//helps user who are not sure which category best fits the harm they encountered
+//they must answer both questions then they will be promted with a category 
+
 function MoreHelpPage() {
   const location = useLocation();
   const navigate = useNavigate();
@@ -122,14 +125,14 @@ function MoreHelpPage() {
           </button>
         </div>
 
-        <div className="summary-box" style={{ marginTop: "24px" }}>
-          <p style={{ margin: 0, fontSize: "14px", color: "#6b7280" }}>
+        <div className="summary-box">
+          <p>
             If you think something might be harmful, it is okay to report it even if you are not completely sure.
           </p>
         </div>
 
         {submitted && (!targeted || !behaviour) && (
-          <p style={{ color: "#991b1b", fontSize: "14px", marginTop: "12px" }}>
+          <p>
             Please answer both questions before continuing.
           </p>
         )}
